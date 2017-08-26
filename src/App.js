@@ -1,19 +1,31 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
+import Navbar from "./components/Navbar";
 import './App.css';
+
+const muiTheme = getMuiTheme({
+  "palette": {
+      "primary1Color": "#b39ddb",
+      "primary2Color": "#d1c4e9",
+      "accent1Color": "#ffd740",
+      "accent2Color": "#9575cd",
+      "accent3Color": "#ffd740",
+      "primary3Color": "#e1bee7",
+      "pickerHeaderColor": "#b39ddb"
+  }
+});
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+      <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
+        <div className="App">
+          <Navbar />
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      </MuiThemeProvider>
     );
   }
 }
