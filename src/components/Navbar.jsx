@@ -8,7 +8,9 @@ class Navbar extends Component {
 
   render(){
     return(
-      <AppBar />
+      <AppBar
+        title="Butterfly Pinner"
+      />
     )
   }
 }
