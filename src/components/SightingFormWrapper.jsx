@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import TextField from "material-ui/TextField";
-import RaisedButton from "material-ui/RaisedButton";
 import { Card, CardText, CardTitle } from "material-ui/Card";
 
 import SightingForm from "./SightingForm"
@@ -8,9 +6,9 @@ import SightingForm from "./SightingForm"
 import '../SightingForm.css';
 
 class SightingFormWrapper extends Component {
-  constructor(props){
-    super(props);
-  }
+  // constructor(props){
+  //   super(props);
+  // }
 
   render(){
     return(

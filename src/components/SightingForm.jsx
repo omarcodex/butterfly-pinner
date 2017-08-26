@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import TextField from "material-ui/TextField";
-import RaisedButton from "material-ui/RaisedButton";
-import { Card, CardText, CardTitle } from "material-ui/Card";
 import firebase from "firebase";
 
 import SightingFormSubmit from "./SightingFormSubmit"
