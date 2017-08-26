@@ -23,14 +23,14 @@ class SightingForm extends Component {
 
   handleSubmit(e){
     e.preventDefault();
-    const dbSightings = firebase.database().ref('sightings');
-    let newSighting = dbSightings.push();
-    newSighting.set({
-      'scientific_name': this.state.scientificName,
-      'count': this.state.count,
-      'sex': this.state.sex
-    },()=>{console.log(newSighting)});
-    let path = newSighting.toString();
+    // const dbSightings = firebase.database().ref('sightings');
+    // let newSighting = dbSightings.push();
+    // newSighting.set({
+    //   'scientific_name': this.state.scientificName,
+    //   'count': this.state.count,
+    //   'sex': this.state.sex
+    // },()=>{console.log(newSighting)});
+    // let path = newSighting.toString();
   }
 
   handleChange(event, index, value) {
