@@ -4,6 +4,7 @@ import RaisedButton from "material-ui/RaisedButton";
 import { Card, CardText, CardTitle } from "material-ui/Card";
 
 import SightingFormSubmit from "./SightingFormSubmit"
+import SightingFormSelect from "./SightingFormSelect"
 
 import '../SightingForm.css';
 
@@ -16,6 +17,8 @@ class SightingForm extends Component {
   handleSubmit(e){
     e.preventDefault();
   }
+
+
 
   render(){
     return(
@@ -33,10 +36,7 @@ class SightingForm extends Component {
               hintText="Count"
               fullWidth={true}              
               />
-            <TextField
-            hintText="Sex"
-            fullWidth={true}
-            />
+            <SightingFormSelect />
             <SightingFormSubmit />
           </form>
         </CardText>
