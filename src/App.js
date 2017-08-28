@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Card, CardTitle, CardText } from "material-ui/Card";
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-import Navbar from "./components/Navbar";
+import Navigation from "./components/Navigation";
 import SightingFormWrapper from "./components/SightingFormWrapper";
+import GuideWrapper from "./components/GuideWrapper";
 import './App.css';
 
 class App extends Component {
@@ -16,8 +18,9 @@ class App extends Component {
       <MuiThemeProvider>
         <Router>
           <div className="App">
-            <Navbar />
-            <Route exact path="/" component={Guide} />
+            <Navigation />
+            <Route exact path="/" component={Home} />
+            <Route path="/guide" component={Guide} />
             <Route path="/sighting" component={Sighting} />
           </div>
         </Router>
@@ -26,20 +29,24 @@ class App extends Component {
   }
 }
 
-class Sighting extends Component {
-  render() {
+const Home = () => {
   return(
-    <div>
-     <SightingFormWrapper className="sighting-form"/>
-    </div>
-    )
-  }
+    <Card>
+      <CardTitle>Welcome!</CardTitle>
+    </Card>
+  )
+}
+
+const Sighting = () => {
+  return(
+    <SightingFormWrapper className="sighting-form"/>
+  )
 }
 
 const Guide = () => {
-  <div>
-    <h1>Guide!</h1>
-  </div>
+  return(
+    <GuideWrapper />
+  )
 }
 
 export default App;
