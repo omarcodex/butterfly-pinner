@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import TextField from "material-ui/TextField";
-import firebase from '../firebase';
+import FlatButton from 'material-ui/FlatButton';
+import database from '../javascripts/firebase';
 
 import SightingFormSubmit from "./SightingFormSubmit"
 import SightingFormSelect from "./SightingFormSelect"
@@ -12,11 +13,31 @@ class SightingForm extends Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.sightings = firebase.database().ref('sightings');
+    this.getPosition = this.getPosition.bind(this);
+    this.showPosition = this.showPosition.bind(this);
+    this.sightings = database.ref('sightings');
     this.state = {
       scientificName: "",
       count: "",
-      sex: ""
+      sex: "",
+      lat: "",
+      lon: ""
+    }
+  }
+
+  showPosition(position) {
+    this.setState({
+      lat: position.coords.latitude,
+      lon: position.coords.longitude
+    });
+    console.log(this.state);
+  }
+
+  getPosition() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.showPosition);
+    } else {
+      this.props.handleNotification("Geolocation is not supported by this browser.");
     }
   }
 
@@ -26,7 +47,9 @@ class SightingForm extends Component {
     newSighting.set({
       'scientificName': this.state.scientificName,
       'count': this.state.count,
-      'sex': this.state.sex
+      'sex': this.state.sex,
+      'lat': this.state.lat,
+      'lon': this.state.lon
     });
     this.resetState();
     this.props.handleNotification("Record successfully added to the database.")
@@ -54,7 +77,6 @@ class SightingForm extends Component {
   }
   
   render(){
-    console.log(this.state)
     return(
       <form onSubmit={this.handleSubmit}>
         <TextField
@@ -70,11 +92,26 @@ class SightingForm extends Component {
           value={this.state.count}
           onChange={this.handleChange}
           data-target-field="count"
-        />
+          />
         <SightingFormSelect
           handleChange={this.handleChange}
           value={this.state.sex}
         />
+        <TextField
+        hintText="Latitude"
+        value={this.state.lat}
+        />
+        <TextField
+        hintText="Longitude"
+        value={this.state.lon}
+        />
+        <FlatButton
+          label="Get GPS Coordinates"
+          primary={true}
+          onClick={this.getPosition}  
+        />
+        <br />
+        <br />
         <SightingFormSubmit />
       </form>
     )
