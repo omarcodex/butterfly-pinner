@@ -12,6 +12,7 @@ class SightingForm extends Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.sightings = firebase.database().ref('sightings');
     this.state = {
       scientificName: "",
       count: "",
@@ -21,14 +22,23 @@ class SightingForm extends Component {
 
   handleSubmit(e){
     e.preventDefault();
-    const dbSightings = firebase.database().ref('sightings');
-    let newSighting = dbSightings.push();
+    let newSighting = this.sightings.push();
     newSighting.set({
       'scientificName': this.state.scientificName,
       'count': this.state.count,
       'sex': this.state.sex
-    },()=>{console.log(newSighting)});
-    let path = newSighting.toString();
+    });
+    this.resetState();
+    this.props.handleNotification("Record successfully added to the database.")
+    // let path = newSighting.toString();
+  }
+
+  resetState() {
+    this.setState({
+      scientificName: "",
+      count: "",
+      sex: ""
+    })
   }
 
   handleChange(event, index, value) {
