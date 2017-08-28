@@ -19,9 +19,13 @@ class App extends Component {
         <Router>
           <div className="App">
             <Navigation />
-            <Route exact path="/" component={Home} />
-            <Route path="/guide" component={Guide} />
-            <Route path="/sighting" component={Sighting} />
+            <div className="wrapper">
+              <div className="container">
+                <Route exact path="/" component={Home} />
+                <Route path="/guide" component={Guide} />
+                <Route path="/sighting" component={Sighting} />
+              </div>
+            </div>
           </div>
         </Router>
       </MuiThemeProvider>
