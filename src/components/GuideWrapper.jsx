@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Card, CardText, CardTitle } from "material-ui/Card";
 
 import GuideRecord from "./GuideRecord";
 

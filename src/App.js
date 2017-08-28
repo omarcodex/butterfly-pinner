@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { Card, CardTitle, CardText } from "material-ui/Card";
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Card, CardTitle } from "material-ui/Card";
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Navigation from "./components/Navigation";
 import SightingFormWrapper from "./components/SightingFormWrapper";
