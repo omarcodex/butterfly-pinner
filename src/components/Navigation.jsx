@@ -35,6 +35,11 @@ const SlideOutMenu = (props) => {
       open={props.open}
       onRequestChange={props.handleToggle}
     >
+      <Link to="/">
+        <MenuItem onClick={props.handleClose}>
+          Home
+        </MenuItem>
+      </Link>
       <Link to="/guide">
         <MenuItem onClick={props.handleClose}>
           Guide 
