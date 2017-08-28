@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import TextField from "material-ui/TextField";
-import firebase from "firebase";
+import firebase from '../firebase';
 
 import SightingFormSubmit from "./SightingFormSubmit"
 import SightingFormSelect from "./SightingFormSelect"
@@ -21,14 +21,14 @@ class SightingForm extends Component {
 
   handleSubmit(e){
     e.preventDefault();
-    // const dbSightings = firebase.database().ref('sightings');
-    // let newSighting = dbSightings.push();
-    // newSighting.set({
-    //   'scientific_name': this.state.scientificName,
-    //   'count': this.state.count,
-    //   'sex': this.state.sex
-    // },()=>{console.log(newSighting)});
-    // let path = newSighting.toString();
+    const dbSightings = firebase.database().ref('sightings');
+    let newSighting = dbSightings.push();
+    newSighting.set({
+      'scientificName': this.state.scientificName,
+      'count': this.state.count,
+      'sex': this.state.sex
+    },()=>{console.log(newSighting)});
+    let path = newSighting.toString();
   }
 
   handleChange(event, index, value) {

@@ -26,7 +26,7 @@ class GuideWrapper extends Component {
           id: 3,
           scientificName: "Nymphalis antiopa",
           familyName: "Nymphalidae",
-          description: "The Mourning Cloak is a large brown butterfly with yellow-fringes on its wings.",
+          description: "The Mourning Cloak is a large brown butterfly with yellow fringes on its wings.",
           photoUrl: "/images/mourning-cloak.jpg"
         }
       ]
