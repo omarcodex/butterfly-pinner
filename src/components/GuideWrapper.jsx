@@ -1,27 +1,22 @@
 import React, { Component } from "react";
 import { Card, CardText, CardTitle } from "material-ui/Card";
 
-import SightingForm from "./SightingForm"
-
-import '../SightingForm.css';
-
-class SightingFormWrapper extends Component {
+class GuideWrapper extends Component {
   // constructor(props){
   //   super(props);
   // }
 
   render(){
     return(
-      <Card className="sighting-form__card">
+      <Card className="guide__card">
         <CardTitle
-        title="Register a new sighting"
+        title="Butterfly Guide"
         />
         <CardText>
-          <SightingForm />
         </CardText>
       </Card>
     )
   }
 }
 
-export default SightingFormWrapper;
+export default GuideWrapper;
