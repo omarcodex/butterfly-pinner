@@ -32,14 +32,19 @@ class SightingForm extends Component {
   }
 
   handleChange(event, index, value) {
+    let attr = event.target.getAttribute("data-target-field");
     let val = event.target.value;
-    let attr = event.target.getAttribute("data-target-field")
+    if (!attr) {
+      attr = "sex"
+      val = value
+    }
     this.setState({
       [attr]: val
     });
   }
-
+  
   render(){
+    console.log(this.state)
     return(
       <form onSubmit={this.handleSubmit}>
         <TextField
@@ -56,7 +61,10 @@ class SightingForm extends Component {
           onChange={this.handleChange}
           data-target-field="count"
         />
-        <SightingFormSelect />
+        <SightingFormSelect
+          handleChange={this.handleChange}
+          value={this.state.sex}
+        />
         <SightingFormSubmit />
       </form>
     )

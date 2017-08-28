@@ -4,31 +4,19 @@ import MenuItem from "material-ui/MenuItem";
 
 import '../SightingForm.css';
 
-class SightingFormSelect extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      value: ""
-    }
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange = (event, index, value) => this.setState({value})
-
-  render(){
-    return(
-      <SelectField
-        hintText="Sex"
-        fullWidth={true}
-        value={this.state.value}
-        onChange={this.handleChange}
-      >
-        <MenuItem value="unknown" primaryText="Unknown"/>
-        <MenuItem value="male" primaryText="Male"/>
-        <MenuItem value="female" primaryText="Female"/>
-      </SelectField>
-    )
-  }
+const SightingFormSelect = (props) => {
+  return(
+    <SelectField
+      hintText="Sex"
+      fullWidth={true}
+      value={props.value}
+      onChange={props.handleChange}
+    >
+      <MenuItem value="unknown" primaryText="Unknown" data-target-field="sex"/>
+      <MenuItem value="male" primaryText="Male" data-target-field="sex"/>
+      <MenuItem value="female" primaryText="Female" data-target-field="sex"/>
+    </SelectField>
+  )
 }
 
 export default SightingFormSelect;

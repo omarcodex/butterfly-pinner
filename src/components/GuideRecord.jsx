@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Card, CardMedia, CardTitle, CardText } from "material-ui/Card";
 
 const GuideRecord = (props) => {

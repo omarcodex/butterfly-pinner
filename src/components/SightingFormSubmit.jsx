@@ -1,20 +1,15 @@
 import React, { Component } from "react";
 import RaisedButton from "material-ui/RaisedButton";
 
-class SightingFormSubmit extends Component {
-  // constructor(props){
-  //   super(props);
-  // }
+const SightingFormSubmit = () => {
 
-  render(){
-    return(
-      <RaisedButton
-        label="Submit"
-        primary={true}
-        type="submit"
-      />
-    )
-  }
+  return(
+    <RaisedButton
+      label="Submit"
+      primary={true}
+      type="submit"
+    />
+  )
 }
 
 export default SightingFormSubmit;
