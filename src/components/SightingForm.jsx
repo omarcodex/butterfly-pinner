@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import TextField from "material-ui/TextField";
 import FlatButton from 'material-ui/FlatButton';
-import database from '../javascripts/firebase';
+
+import db from '../javascripts/firebase';
 
 import SightingFormSubmit from "./SightingFormSubmit"
 import SightingFormSelect from "./SightingFormSelect"
@@ -13,9 +14,9 @@ class SightingForm extends Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.writeSpecies = this.writeSpecies.bind(this);
     this.getPosition = this.getPosition.bind(this);
     this.showPosition = this.showPosition.bind(this);
-    this.sightings = database.ref('sightings');
     this.state = {
       scientificName: "",
       count: "",
@@ -30,7 +31,6 @@ class SightingForm extends Component {
       lat: position.coords.latitude,
       lon: position.coords.longitude
     });
-    console.log(this.state);
   }
 
   getPosition() {
@@ -41,9 +41,25 @@ class SightingForm extends Component {
     }
   }
 
+  writeSpecies() {
+    let sp = this.state.scientificName;
+    let snap;
+    db.ref().child("species/" + sp).once("value").then(snap => {
+      snap = snap.val()
+      if (!snap) {
+        let newSpecies = db.ref("species").child(sp);
+        newSpecies.set({
+          genus: sp.split(" ")[0],
+          species: sp.split(" ")[1]
+        });
+      }
+    });
+  }
+
   handleSubmit(e){
     e.preventDefault();
-    let newSighting = this.sightings.push();
+    let newSighting = db.ref('sightings').push();
+    this.writeSpecies();
     newSighting.set({
       'scientificName': this.state.scientificName,
       'count': this.state.count,

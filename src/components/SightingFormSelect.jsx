@@ -12,9 +12,9 @@ const SightingFormSelect = (props) => {
       value={props.value}
       onChange={props.handleChange}
     >
-      <MenuItem value="unknown" primaryText="Unknown" data-target-field="sex"/>
-      <MenuItem value="male" primaryText="Male" data-target-field="sex"/>
-      <MenuItem value="female" primaryText="Female" data-target-field="sex"/>
+      <MenuItem value="unknown" primaryText="Unknown"/>
+      <MenuItem value="male" primaryText="Male"/>
+      <MenuItem value="female" primaryText="Female"/>
     </SelectField>
   )
 }
