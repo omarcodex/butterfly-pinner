@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { Card, CardTitle } from "material-ui/Card";
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Navigation from "./components/Navigation";
 import SightingFormWrapper from "./components/SightingFormWrapper";
 import GuideWrapper from "./components/GuideWrapper";
+import Home from "./pages/Home";
 import './App.css';
 
 class App extends Component {
-  // constructor(props){
-  //   super(props);
-  // }
+  constructor(props){
+    super(props);
+    this.state = {
+      currentUser: null
+    };
+  }
   
   render() {
     return (
@@ -31,14 +34,6 @@ class App extends Component {
       </MuiThemeProvider>
     );
   }
-}
-
-const Home = () => {
-  return(
-    <Card>
-      <CardTitle>Welcome!</CardTitle>
-    </Card>
-  )
 }
 
 const Sighting = () => {
