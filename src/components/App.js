@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import Navigation from "./components/Navigation";
-import SightingFormWrapper from "./components/SightingFormWrapper";
-import GuideWrapper from "./components/GuideWrapper";
-import Home from "./pages/Home";
+import Navigation from "./Navigation";
+import SightingFormWrapper from "./SightingForm/SightingFormWrapper";
+import GuideWrapper from "./Guide/GuideWrapper";
+import Home from "./Home";
 import './App.css';
 
 class App extends Component {

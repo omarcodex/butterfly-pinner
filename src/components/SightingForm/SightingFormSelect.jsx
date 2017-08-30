@@ -2,7 +2,7 @@ import React from "react";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
 
-import '../SightingForm.css';
+import './SightingForm.css';
 
 const SightingFormSelect = (props) => {
   return(

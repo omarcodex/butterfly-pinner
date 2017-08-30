@@ -3,7 +3,7 @@ import { Card, CardText, CardTitle } from "material-ui/Card";
 import SightingForm from "./SightingForm"
 import Snackbar from "material-ui/Snackbar";
 
-import '../SightingForm.css';
+import './SightingForm.css';
 
 class SightingFormWrapper extends Component {
   constructor(props){

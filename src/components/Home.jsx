@@ -34,7 +34,6 @@ class Home extends Component {
 
   handleLogin(e) {
     const auth = firebase.auth();
-    console.log(auth);
     const promise = auth.signInWithEmailAndPassword(this.state.email, this.state.password);
     promise.catch( e => console.log(e.message) );
     promise.then( e => this.handleNotification("Succesfully signed in!") )
