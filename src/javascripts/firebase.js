@@ -11,6 +11,12 @@ let config = {
 
 firebase.initializeApp(config);
 
-let database = firebase.database();
+firebase.auth().onAuthStateChanged(firebaseUser=>{
+  if (firebaseUser) {
+    console.log(firebaseUser);
+  } else {
+    console.log("Not logged in!");
+  }
+});
 
-export default database;
+export default firebase;

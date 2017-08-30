@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import TextField from "material-ui/TextField";
 import FlatButton from 'material-ui/FlatButton';
 
-import db from '../javascripts/firebase';
+import firebase from '../javascripts/firebase';
 
 import SightingFormSubmit from "./SightingFormSubmit"
 import SightingFormSelect from "./SightingFormSelect"
@@ -44,10 +44,10 @@ class SightingForm extends Component {
   writeSpecies() {
     let sp = this.state.scientificName;
     let snap;
-    db.ref().child("species/" + sp).once("value").then(snap => {
+    firebase.database().ref().child("species/" + sp).once("value").then(snap => {
       snap = snap.val()
       if (!snap) {
-        let newSpecies = db.ref("species").child(sp);
+        let newSpecies = firebase.database().ref("species").child(sp);
         newSpecies.set({
           genus: sp.split(" ")[0],
           species: sp.split(" ")[1]
@@ -58,7 +58,7 @@ class SightingForm extends Component {
 
   handleSubmit(e){
     e.preventDefault();
-    let newSighting = db.ref('sightings').push();
+    let newSighting = firebase.database().ref('sightings').push();
     this.writeSpecies();
     newSighting.set({
       'scientificName': this.state.scientificName,
@@ -68,7 +68,7 @@ class SightingForm extends Component {
       'lon': this.state.lon
     });
     this.resetState();
-    this.props.handleNotification("Record successfully added to the database.")
+    this.props.handleNotification("Record successfully added to the firebase.database.")
     // let path = newSighting.toString();
   }
 
