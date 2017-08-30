@@ -1,12 +1,11 @@
 import React, { Component } from "react";
+import GuideEntries from "./GuideEntries";
 
-import GuideRecord from "./GuideRecord";
-
-class GuideWrapper extends Component {
+class GuideContainer extends Component {
   constructor(props){
     super(props);
     this.state = {
-      data: [
+      entries: [
         {
           id: 1,
           scientificName: "Papilio eurymedon",
@@ -33,23 +32,10 @@ class GuideWrapper extends Component {
   }
 
   render(){
-    let records = this.state.data.map((record)=>{
-      return(
-        <GuideRecord
-          scientificName={record.scientificName}
-          familyName={record.familyName}
-          description={record.description}
-          photoUrl={record.photoUrl}
-          key={record.id}
-        />
-      )});
     return(
-      <div>
-        <h1>Butterfly Guide</h1>
-        {records}
-      </div>
+      <GuideEntries entries={this.state.entries}/>
     )
   }
 }
 
-export default GuideWrapper;
+export default GuideContainer;
