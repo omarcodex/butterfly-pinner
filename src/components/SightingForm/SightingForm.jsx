@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import TextField from "material-ui/TextField";
 import FlatButton from 'material-ui/FlatButton';
 
-import firebase from '../javascripts/firebase';
+import firebase from '../../javascripts/firebase';
 
-import SightingFormSubmit from "./SightingFormSubmit"
-import SightingFormSelect from "./SightingFormSelect"
+import SightingFormSubmit from "./SightingFormSubmit";
+import SightingFormSelect from "./SightingFormSelect";
 
-import '../SightingForm.css';
+import './SightingForm.css';
 
 class SightingForm extends Component {
   constructor(props){
