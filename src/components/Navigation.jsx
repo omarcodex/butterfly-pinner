@@ -4,7 +4,6 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import { Link } from 'react-router-dom';
 
-
 class Navigation extends Component {
   constructor(props){
     super(props);
