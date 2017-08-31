@@ -13,7 +13,7 @@ firebase.initializeApp(config);
 
 firebase.auth().onAuthStateChanged(firebaseUser=>{
   if (firebaseUser) {
-    console.log(firebaseUser);
+    // console.log(firebaseUser);
   } else {
     console.log("Not logged in!");
   }

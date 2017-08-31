@@ -3,9 +3,10 @@ import { Card, CardTitle, CardText } from "material-ui/Card";
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
 import Snackbar from "material-ui/Snackbar";
-import firebase from "../javascripts/firebase";
+import firebase from "../../javascripts/firebase";
+import "./LoginForm.css"
 
-class Home extends Component {
+class LoginFormContainer extends Component {
 
   constructor(props){
     super(props);
@@ -80,59 +81,63 @@ class Home extends Component {
 
   render(){
     return(
-      <Card>
-        <CardTitle>Welcome!</CardTitle>
-        <CardText>
-          <TextField
-            id="authenticator__email-field"
-            data-target-field="email"
-            hintText="Email"
-            fullWidth={true}
-            onChange={this.handleChange}
+      <div className="page">
+        <Card className="login-form__container">
+          <CardTitle title="Login" style={{paddingBottom: 0}}/>
+          <CardText>
+            <TextField
+              className="login-form__email-field"
+              data-target-field="email"
+              hintText="Email"
+              fullWidth={true}
+              onChange={this.handleChange}
+            />
+            <TextField
+              className="login-form__password-field"
+              data-target-field="password"
+              hintText="Password"
+              fullWidth={true}
+              type="password"
+              onChange={this.handleChange}
+            />
+            <br />
+            <br />
+            <RaisedButton
+              className="login-form__button"
+              label="Log in"
+              primary={true}
+              onClick={this.handleLogin}
+            />
+            <RaisedButton
+              className="login-form__button"
+              label="Sign up"
+              onClick={this.handleSignup}
+            />
+            <RaisedButton
+              className="login-form__button"
+              label="Log out"
+              secondary={true}
+              onClick={this.handleSignout}
+            />
+            <br />
+            <br />
+            <RaisedButton
+              className="login-form__google-login-btn"
+              label="Log in with Google"
+              primary={true}
+              onClick={this.handleGoogleLogin}
+            />
+          </CardText>
+          <Snackbar
+            open={this.state.notificationOpen}
+            message={this.state.notificationMessage}
+            autoHideDuration={4000}
+            onRequestClose={this.handleNotificationClose}
           />
-          <TextField
-            id="authenticator__password-field"
-            data-target-field="password"
-            hintText="Password"
-            fullWidth={true}
-            type="password"
-            onChange={this.handleChange}
-          />
-          <RaisedButton
-            id="authenticator__login-btn"
-            label="Log in"
-            primary={true}
-            onClick={this.handleLogin}
-          />
-          <RaisedButton
-            id="authenticator__signup-btn"
-            label="Sign up"
-            onClick={this.handleSignup}
-          />
-          <RaisedButton
-            id="authenticator__logout-btn"
-            label="Log out"
-            secondary={true}
-            onClick={this.handleSignout}
-          />
-          <br />
-          <br />
-          <RaisedButton
-            id="authenticator__google-login-btn"
-            label="Log in with Google"
-            primary={true}
-            onClick={this.handleGoogleLogin}
-          />
-        </CardText>
-        <Snackbar
-          open={this.state.notificationOpen}
-          message={this.state.notificationMessage}
-          autoHideDuration={4000}
-          onRequestClose={this.handleNotificationClose}
-        />
-      </Card>
+        </Card>
+      </div>
     )
   }
 }
 
-export default Home;
+export default LoginFormContainer;
