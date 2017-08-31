@@ -34,7 +34,7 @@ class SightingFormContainer extends Component {
       <div className="page">
         <Card className="sighting-form__container">
           <CardTitle
-          title="Register a new sighting"
+            title="Log a New Sighting"
           />
           <CardText>
             <SightingForm handleNotification={this.handleNotification}/>

@@ -6,6 +6,7 @@ import IconButton from 'material-ui/IconButton';
 import RaisedButton from "material-ui/RaisedButton";
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import MenuItem from 'material-ui/MenuItem';
+import FontIcon from 'material-ui/FontIcon';
 import { Link } from 'react-router-dom';
 import firebase from "../javascripts/firebase";
 
@@ -50,17 +51,26 @@ const SlideOutMenu = (props) => {
       onRequestChange={props.handleToggle}
     >
       <Link to="/">
-        <MenuItem onClick={props.handleClose}>
+        <MenuItem
+          onClick={props.handleClose}
+          leftIcon={<FontIcon className="material-icons">home</FontIcon>}
+        >
           Home
         </MenuItem>
       </Link>
       <Link to="/guide">
-        <MenuItem onClick={props.handleClose}>
+        <MenuItem
+          onClick={props.handleClose}
+          leftIcon={<FontIcon className="material-icons">style</FontIcon>}
+        >
           Guide 
         </MenuItem>
       </Link>
       <Link to="/sighting">
-        <MenuItem onClick={props.handleClose}>
+        <MenuItem
+          onClick={props.handleClose}
+          leftIcon={<FontIcon className="material-icons">party_mode</FontIcon>}
+        >
           Sighting
         </MenuItem>
       </Link>
