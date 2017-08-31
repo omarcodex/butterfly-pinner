@@ -113,14 +113,8 @@ class LoginFormContainer extends Component {
               label="Sign up"
               onClick={this.handleSignup}
             />
-            <RaisedButton
-              className="login-form__button"
-              label="Log out"
-              secondary={true}
-              onClick={this.handleSignout}
-            />
             <br />
-            <br />
+            <hr />
             <RaisedButton
               className="login-form__google-login-btn"
               label="Log in with Google"
