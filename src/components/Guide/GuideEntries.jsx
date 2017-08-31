@@ -10,7 +10,7 @@ class GuideEntries extends Component {
   
   renderEntry({scientificName, familyName, photoUrl, description}) {
     return(
-      <Card>
+      <Card className="guide__entry">
         <CardMedia overlay={<CardTitle title={scientificName} subtitle={familyName} />}>
           <img src={photoUrl} alt={scientificName} />
         </CardMedia>

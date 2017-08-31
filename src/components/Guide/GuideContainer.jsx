@@ -1,5 +1,8 @@
 import React, { Component } from "react";
+import { Card, CardTitle, CardText } from "material-ui/Card";
+
 import GuideEntries from "./GuideEntries";
+import "./Guide.css";
 
 class GuideContainer extends Component {
   constructor(props){
@@ -33,7 +36,16 @@ class GuideContainer extends Component {
 
   render(){
     return(
-      <GuideEntries entries={this.state.entries}/>
+      <div className="page">
+        <Card className="guide__container">
+          <CardTitle title="Butterfly Guide"/>
+          <CardText>
+            <GuideEntries
+              entries={this.state.entries}
+            />
+          </CardText>
+        </Card>
+      </div>
     )
   }
 }

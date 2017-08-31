@@ -94,7 +94,7 @@ class SightingForm extends Component {
   
   render(){
     return(
-      <form onSubmit={this.handleSubmit}>
+      <form className="sighting-form__form"onSubmit={this.handleSubmit}>
         <TextField
           hintText="Scientific Name"
           fullWidth={true}

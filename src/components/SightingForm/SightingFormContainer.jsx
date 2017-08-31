@@ -5,7 +5,7 @@ import Snackbar from "material-ui/Snackbar";
 
 import './SightingForm.css';
 
-class SightingFormWrapper extends Component {
+class SightingFormContainer extends Component {
   constructor(props){
     super(props);
     this.handleNotification = this.handleNotification.bind(this);
@@ -31,8 +31,8 @@ class SightingFormWrapper extends Component {
 
   render(){
     return(
-      <div>
-        <Card className="sighting-form__card">
+      <div className="page">
+        <Card className="sighting-form__container">
           <CardTitle
           title="Register a new sighting"
           />
@@ -51,4 +51,4 @@ class SightingFormWrapper extends Component {
   }
 }
 
-export default SightingFormWrapper;
+export default SightingFormContainer;

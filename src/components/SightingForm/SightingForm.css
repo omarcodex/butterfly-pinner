@@ -1,3 +1,7 @@
-.sighting-form__card {
+.sighting-form__container {
+  padding: 20px;
+}
 
+.sighting-form__form {
+  margin-bottom: 0;
 }
