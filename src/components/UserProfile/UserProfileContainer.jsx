@@ -14,7 +14,9 @@ class UserProfileContainer extends Component {
   render() {
     // console.log(this.state);
     return(
-      <UserProfile currentUser={this.state.currentUser} />
+      <div className="page">
+        <UserProfile currentUser={this.state.currentUser} />
+      </div>
     )
   }
 }
