@@ -13,8 +13,8 @@ const SightingFormSelect = (props) => {
       onChange={props.handleChange}
     >
       <MenuItem value="unknown" primaryText="Unknown"/>
-      <MenuItem value="male" primaryText="Male"/>
-      <MenuItem value="female" primaryText="Female"/>
+      <MenuItem value="male" primaryText="♂ Male"/>
+      <MenuItem value="female" primaryText="♀ Female"/>
     </SelectField>
   )
 }

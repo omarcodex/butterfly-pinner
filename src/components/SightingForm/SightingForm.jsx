@@ -113,20 +113,31 @@ class SightingForm extends Component {
           handleChange={this.handleChange}
           value={this.state.sex}
         />
-        <TextField
-        hintText="Latitude"
-        value={this.state.lat}
-        />
-        <TextField
-        hintText="Longitude"
-        value={this.state.lon}
-        />
-        <FlatButton
-          label="Get GPS Coordinates"
-          primary={true}
-          onClick={this.getPosition}  
-        />
-        <br />
+        <div className="row">
+          <div className="one-half column">
+            <TextField
+              fullWidth={true}
+              hintText="Latitude"
+              value={this.state.lat}
+            />
+            <TextField
+              fullWidth={true}
+              hintText="Longitude"
+              value={this.state.lon}
+            />
+          </div>
+          <div
+            className="one-half column"
+          >
+            <FlatButton
+              label="Get GPS Coordinates"
+              fullWidth={true}
+              primary={true}
+              onClick={this.getPosition}
+              style={{border: "solid 1px #D32F2F"}}
+            />
+          </div>
+        </div>
         <br />
         <SightingFormSubmit />
       </form>

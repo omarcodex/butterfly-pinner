@@ -5,3 +5,7 @@
 .sighting-form__form {
   margin-bottom: 0;
 }
+
+.sighting-form__gps-button {
+  border: solid 1px red;
+}
