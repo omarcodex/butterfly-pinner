@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
@@ -11,6 +13,17 @@ import LoginFormContainer from "./LoginForm/LoginFormContainer";
 
 import "./App.css";
 
+const muiTheme = getMuiTheme({
+  palette: {
+    "primary1Color": "#d32f2f",
+    "accent1Color": "#ffab40"
+  },
+  fontFamily: 'Raleway',
+  appBar: {
+  },
+});
+
+
 class App extends Component {
   constructor(props){
     super(props);
@@ -21,7 +34,7 @@ class App extends Component {
   
   render() {
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={muiTheme}>
         <Router>
           <div className="App">
             <Navigation />

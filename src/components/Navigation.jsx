@@ -20,11 +20,15 @@ class Navigation extends Component {
 
   handleToggle = () => this.setState({open: !this.state.open});
 
+  // handleNotification = () => 
+
   handleClose = () => this.setState({open: false});
 
   handleSignout(e) {
     const promise = firebase.auth().signOut();
-    promise.then( e => this.handleNotification("Succesfully logged out!") );
+    promise.then(
+      // e => this.handleNotification("Succesfully logged out!")
+    );
   }
 
   render(){
