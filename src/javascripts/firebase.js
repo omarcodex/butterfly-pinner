@@ -24,8 +24,7 @@ firebase.auth().onAuthStateChanged(firebaseUser=>{
 
 export default firebase;
 
-console.log(store.getState());
-
 let unsubscribe = store.subscribe(() =>
-  console.log(store.getState())
+  // console.log(store.getState())
+  2+2
 )
