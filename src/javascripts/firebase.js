@@ -27,7 +27,5 @@ export default firebase;
 console.log(store.getState());
 
 let unsubscribe = store.subscribe(() =>
-console.log(store.getState())
+  console.log(store.getState())
 )
-
-store.dispatch(testAction(1));

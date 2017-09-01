@@ -1,15 +1,7 @@
-export const loginUser = (user) => {
-  return(
-    {
-      type: 'LOGIN_USER',
-      user
-    }
-  );
-};
-
-export const testAction = (test) => {
+export const loginUser = (args) => {
   return {
-    type: 'TEST_ACTION',
-    test
+    type: 'LOGIN_USER',
+    user: args.user,
+    token: args.token
   }
-}
+};
