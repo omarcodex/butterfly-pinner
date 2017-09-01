@@ -2,20 +2,32 @@ import React, { Component } from "react";
 import firebase from "../../javascripts/firebase";
 
 import UserProfile from "./UserProfile";
+import store from "../../store/configureStore";
 
 class UserProfileContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: firebase.auth().currentUser
-    };
+      sightings: []
+    }
+  }
+
+  componentDidMount() {
+    let sightings;
+    let ref = firebase.database().ref().child("sightings");
+    var that = this;
+    ref.once("value").then(function(snap){
+      sightings = Object.values(snap.val());
+      that.setState({
+        sightings: sightings
+      });
+    })
   }
 
   render() {
-    // console.log(this.state);
     return(
       <div className="page">
-        <UserProfile currentUser={this.state.currentUser} />
+        <UserProfile user={store.getState().user} sightings={this.state.sightings} />
       </div>
     )
   }
