@@ -7,6 +7,8 @@ import firebase from '../../javascripts/firebase';
 import SightingFormSubmit from "./SightingFormSubmit";
 import SightingFormSelect from "./SightingFormSelect";
 
+import store from "../../store/configureStore";
+
 import './SightingForm.css';
 
 class SightingForm extends Component {
@@ -65,7 +67,8 @@ class SightingForm extends Component {
       'count': this.state.count,
       'sex': this.state.sex,
       'lat': this.state.lat,
-      'lon': this.state.lon
+      'lon': this.state.lon,
+      'userId': store.getState().user.uid
     });
     this.resetState();
     this.props.handleNotification("Record successfully added to the firebase.database.")

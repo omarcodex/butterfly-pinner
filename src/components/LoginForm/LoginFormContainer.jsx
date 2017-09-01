@@ -5,6 +5,8 @@ import RaisedButton from "material-ui/RaisedButton";
 import Snackbar from "material-ui/Snackbar";
 import firebase from "../../javascripts/firebase";
 import "./LoginForm.css"
+import { loginUser } from "../../actions/userActions";
+import store from "../../store/configureStore";
 
 class LoginFormContainer extends Component {
 
@@ -17,7 +19,7 @@ class LoginFormContainer extends Component {
     this.handleGoogleLogin = this.handleGoogleLogin.bind(this);
     this.handleNotification = this.handleNotification.bind(this);
     this.handleNotificationClose = this.handleNotificationClose.bind(this);
-    this.state={
+    this.state = {
       email: "",
       password: "",
       notificationOpen: false,
@@ -37,7 +39,10 @@ class LoginFormContainer extends Component {
     const auth = firebase.auth();
     const promise = auth.signInWithEmailAndPassword(this.state.email, this.state.password);
     promise.catch( e => console.log(e.message) );
-    promise.then( e => this.handleNotification("Succesfully signed in!") )
+    promise.then( response => {
+      console.log(response);
+      this.handleNotification("Succesfully signed in!");
+    });
   }
 
   handleSignup(e) {
@@ -67,9 +72,11 @@ class LoginFormContainer extends Component {
   handleGoogleLogin(e) {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider).then(function(result) {
-      // var token = result.credential.accessToken;
-      // var user = result.user;
-      this.handleNotification("Succesfully signed in!");
+      let args = {
+        user: result.user,
+        token: result.credential.accessToken
+      }
+      store.dispatch(loginUser(args));
     }).catch(function(error) {
       // var errorCode = error.code;
       // var errorMessage = error.message;
