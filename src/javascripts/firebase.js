@@ -1,5 +1,8 @@
 import * as firebase from 'firebase';
 
+import { testAction } from "../actions/userActions";
+import store from "../store/configureStore";
+
 let config = {
   apiKey: 'AIzaSyBhSdMEX0P-QGwfZLOYLApr63rmERuxb_o',
   authDomain: 'butterflypinner.firebaseapp.com',
@@ -20,3 +23,11 @@ firebase.auth().onAuthStateChanged(firebaseUser=>{
 });
 
 export default firebase;
+
+console.log(store.getState());
+
+let unsubscribe = store.subscribe(() =>
+console.log(store.getState())
+)
+
+store.dispatch(testAction(1));
