@@ -58,9 +58,9 @@ class SightingForm extends Component {
     });
   }
 
-  uploadFile() {
+  uploadFile(e) {
     // e.preventDefault();
-    console.log('Photo uploading...');
+    console.log('Photo uploading...', e.target.files);
   }
 
   handleSubmit(e) {
