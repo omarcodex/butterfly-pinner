@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import TextField from "material-ui/TextField";
+import React, { Component } from 'react';
+import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 
 import db from '../javascripts/firebase';
 
-import SightingFormSubmit from "./SightingFormSubmit"
-import SightingFormSelect from "./SightingFormSelect"
+import SightingFormSubmit from './SightingFormSubmit';
+import SightingFormSelect from './SightingFormSelect';
 
 import '../SightingForm.css';
 
 class SightingForm extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -18,12 +18,12 @@ class SightingForm extends Component {
     this.getPosition = this.getPosition.bind(this);
     this.showPosition = this.showPosition.bind(this);
     this.state = {
-      scientificName: "",
-      count: "",
-      sex: "",
-      lat: "",
-      lon: ""
-    }
+      scientificName: '',
+      count: '',
+      sex: '',
+      lat: '',
+      lon: ''
+    };
   }
 
   showPosition(position) {
@@ -37,63 +37,64 @@ class SightingForm extends Component {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.showPosition);
     } else {
-      this.props.handleNotification("Geolocation is not supported by this browser.");
+      this.props.handleNotification('Geolocation is not supported by this browser.');
     }
   }
 
   writeSpecies() {
     let sp = this.state.scientificName;
-    let snap;
-    db.ref().child("species/" + sp).once("value").then(snap => {
-      snap = snap.val()
+    // let snap;
+    db.ref().child('species/' + sp).once('value').then(snap => {
+      snap = snap.val();
       if (!snap) {
-        let newSpecies = db.ref("species").child(sp);
+        let newSpecies = db.ref('species').child(sp);
         newSpecies.set({
-          genus: sp.split(" ")[0],
-          species: sp.split(" ")[1]
+          genus: sp.split(' ')[0],
+          species: sp.split(' ')[1]
         });
       }
     });
   }
 
-  handleSubmit(e){
+  handleSubmit(e) {
     e.preventDefault();
     let newSighting = db.ref('sightings').push();
+    // To-do: save species to dictionary if it hasn't been logged already:
     this.writeSpecies();
     newSighting.set({
-      'scientificName': this.state.scientificName,
-      'count': this.state.count,
-      'sex': this.state.sex,
-      'lat': this.state.lat,
-      'lon': this.state.lon
+      scientificName: this.state.scientificName,
+      count: this.state.count,
+      sex: this.state.sex,
+      lat: this.state.lat,
+      lon: this.state.lon
     });
     this.resetState();
-    this.props.handleNotification("Record successfully added to the database.")
+    this.props.handleNotification('Record successfully added to the database.');
     // let path = newSighting.toString();
   }
 
   resetState() {
     this.setState({
-      scientificName: "",
-      count: "",
-      sex: ""
-    })
+      scientificName: '',
+      count: '',
+      sex: ''
+    });
   }
 
   handleChange(event, index, value) {
-    let attr = event.target.getAttribute("data-target-field");
+    let attr = event.target.getAttribute('data-target-field');
     let val = event.target.value;
     if (!attr) {
-      attr = "sex"
-      val = value
+      attr = 'sex';
+      val = value;
     }
     this.setState({
       [attr]: val
     });
   }
-  
-  render(){
-    return(
+
+  render() {
+    return (
       <form onSubmit={this.handleSubmit}>
         <TextField
           hintText="Scientific Name"
@@ -108,29 +109,16 @@ class SightingForm extends Component {
           value={this.state.count}
           onChange={this.handleChange}
           data-target-field="count"
-          />
-        <SightingFormSelect
-          handleChange={this.handleChange}
-          value={this.state.sex}
         />
-        <TextField
-        hintText="Latitude"
-        value={this.state.lat}
-        />
-        <TextField
-        hintText="Longitude"
-        value={this.state.lon}
-        />
-        <FlatButton
-          label="Get GPS Coordinates"
-          primary={true}
-          onClick={this.getPosition}  
-        />
+        <SightingFormSelect handleChange={this.handleChange} value={this.state.sex} />
+        <TextField hintText="Latitude" value={this.state.lat} />
+        <TextField hintText="Longitude" value={this.state.lon} />
+        <FlatButton label="Get GPS Coordinates" primary={true} onClick={this.getPosition} />
         <br />
         <br />
         <SightingFormSubmit />
       </form>
-    )
+    );
   }
 }
 
