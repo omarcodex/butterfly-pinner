@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 
 import db from '../javascripts/firebase';
 
@@ -116,9 +116,10 @@ class SightingForm extends Component {
         <FlatButton label="Get GPS Coordinates" primary={true} onClick={this.getPosition} />
         <br />
         <br />
-        <RaisedButton secondary={true} containerElement="label" label="Add Photo">
-          <input type="file" />
-        </RaisedButton>
+        <div>
+          <input id="myInput" type="file" ref={ref => (this.myInput = ref)} style={{ display: 'none' }} />
+          <FloatingActionButton className="floatingButton" secondary={true} onClick={e => this.myInput.click()} />
+        </div>
         <SightingFormSubmit />
       </form>
     );
