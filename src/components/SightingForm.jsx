@@ -117,7 +117,14 @@ class SightingForm extends Component {
         <br />
         <br />
         <div>
-          <input id="myInput" type="file" ref={ref => (this.myInput = ref)} style={{ display: 'none' }} />
+          <input
+            id="myInput"
+            type="file"
+            accept="image/*"
+            capture="camera"
+            ref={ref => (this.myInput = ref)}
+            style={{ display: 'none' }}
+          />
           <FloatingActionButton className="floatingButton" secondary={true} onClick={e => this.myInput.click()} />
         </div>
         <SightingFormSubmit />
