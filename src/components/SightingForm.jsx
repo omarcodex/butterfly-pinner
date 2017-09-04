@@ -15,6 +15,7 @@ class SightingForm extends Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.uploadFile = this.uploadFile.bind(this);
     this.writeSpecies = this.writeSpecies.bind(this);
     this.getPosition = this.getPosition.bind(this);
     this.showPosition = this.showPosition.bind(this);
@@ -23,7 +24,8 @@ class SightingForm extends Component {
       count: '',
       sex: '',
       lat: '',
-      lon: ''
+      lon: '',
+      filename: ''
     };
   }
 
@@ -54,6 +56,11 @@ class SightingForm extends Component {
         });
       }
     });
+  }
+
+  uploadFile() {
+    // e.preventDefault();
+    console.log('Photo uploading...');
   }
 
   handleSubmit(e) {
@@ -124,6 +131,7 @@ class SightingForm extends Component {
             capture="camera"
             ref={ref => (this.myInput = ref)}
             style={{ display: 'none' }}
+            onChange={this.uploadFile}
           />
           <FloatingActionButton className="floatingButton" secondary={true} onClick={e => this.myInput.click()} />
         </div>
