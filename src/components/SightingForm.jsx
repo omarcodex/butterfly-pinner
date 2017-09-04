@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import db from '../javascripts/firebase';
 
@@ -43,7 +44,6 @@ class SightingForm extends Component {
 
   writeSpecies() {
     let sp = this.state.scientificName;
-    // let snap;
     db.ref().child('species/' + sp).once('value').then(snap => {
       snap = snap.val();
       if (!snap) {
@@ -116,6 +116,9 @@ class SightingForm extends Component {
         <FlatButton label="Get GPS Coordinates" primary={true} onClick={this.getPosition} />
         <br />
         <br />
+        <RaisedButton secondary={true} containerElement="label" label="Add Photo">
+          <input type="file" />
+        </RaisedButton>
         <SightingFormSubmit />
       </form>
     );
