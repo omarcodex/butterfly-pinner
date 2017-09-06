@@ -27,7 +27,7 @@ class SightingForm extends Component {
       sex: '',
       lat: '',
       lon: '',
-      filename: null
+      photoURL: null
     };
   }
 
@@ -68,7 +68,7 @@ class SightingForm extends Component {
     //   window.alert('You can only share images. Please try again.');
     //   return;
     // }
-    this.filename = e.target.files[0];
+    this.photoURL = e.target.files[0];
   }
 
   handleSubmit(e) {
@@ -78,8 +78,8 @@ class SightingForm extends Component {
 
     // Added: uploadFile protocol for images
 
-    console.log('Photo chosen...', this.filename);
-    let file = this.filename;
+    console.log('Photo chosen...', this.photoURL);
+    let file = this.photoURL;
     if (!file.type.match('image.*')) {
       window.alert('You can only share images. Please try again.');
       return;
@@ -95,7 +95,7 @@ class SightingForm extends Component {
         sex: this.state.sex,
         lat: this.state.lat,
         lon: this.state.lon,
-        filename: this.filename
+        photoURL: this.photoURL
       })
       .then(
         function(data) {
@@ -108,7 +108,7 @@ class SightingForm extends Component {
               console.log('current data.', data);
               console.log('current snapshot', snapshot);
               return storage.ref(fullPath).getDownloadURL().then(function(url) {
-                newSightingRef.child(newSightingKey).update({ filename: url });
+                newSightingRef.child(newSightingKey).update({ photoURL: url });
               });
             }.bind(this)
           );
