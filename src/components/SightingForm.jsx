@@ -4,11 +4,13 @@ import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 
 import db from '../javascripts/firebase';
+import storage from '../javascripts/firebase-storage';
 
 import SightingFormSubmit from './SightingFormSubmit';
 import SightingFormSelect from './SightingFormSelect';
 
 import '../SightingForm.css';
+// var files_array = []; // Setting in global scope for development.
 
 class SightingForm extends Component {
   constructor(props) {
@@ -25,7 +27,7 @@ class SightingForm extends Component {
       sex: '',
       lat: '',
       lon: '',
-      filename: ''
+      filename: null
     };
   }
 
@@ -61,20 +63,60 @@ class SightingForm extends Component {
   uploadFile(e) {
     // e.preventDefault();
     console.log('Photo uploading...', e.target.files);
+    // var file = event.target.files[0];
+    // if (!file.type.match('image.*')) {
+    //   window.alert('You can only share images. Please try again.');
+    //   return;
+    // }
+    this.filename = e.target.files[0];
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    let newSighting = db.ref('sightings').push();
+    let newSightingRef = db.ref('sightings');
+    let newSightingKey = db.ref('sightings').push().key;
+
+    // Added: uploadFile protocol for images
+
+    console.log('Photo chosen...', this.filename);
+    let file = this.filename;
+    if (!file.type.match('image.*')) {
+      window.alert('You can only share images. Please try again.');
+      return;
+    }
+
     // To-do: save species to dictionary if it hasn't been logged already:
     this.writeSpecies();
-    newSighting.set({
-      scientificName: this.state.scientificName,
-      count: this.state.count,
-      sex: this.state.sex,
-      lat: this.state.lat,
-      lon: this.state.lon
-    });
+    newSightingRef
+      .child(newSightingKey)
+      .set({
+        scientificName: this.state.scientificName,
+        count: this.state.count,
+        sex: this.state.sex,
+        lat: this.state.lat,
+        lon: this.state.lon,
+        filename: this.filename
+      })
+      .then(
+        function(data) {
+          // Upload the image to Cloud Storage.
+          var filePath = 'sightingImages/' + newSightingKey;
+          return storage.ref(filePath).put(file).then(
+            function(snapshot) {
+              // Get the file's Storage URI and update the chat message placeholder.
+              var fullPath = snapshot.metadata.fullPath;
+              console.log('current data.', data);
+              console.log('current snapshot', snapshot);
+              return storage.ref(fullPath).getDownloadURL().then(function(url) {
+                newSightingRef.child(newSightingKey).update({ filename: url });
+              });
+            }.bind(this)
+          );
+        }.bind(this)
+      )
+      .catch(function(error) {
+        console.error('There was an error uploading a file to Cloud Storage:', error);
+      });
     this.resetState();
     this.props.handleNotification('Record successfully added to the database.');
     // let path = newSighting.toString();
