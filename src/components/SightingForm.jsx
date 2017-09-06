@@ -10,7 +10,6 @@ import SightingFormSubmit from './SightingFormSubmit';
 import SightingFormSelect from './SightingFormSelect';
 
 import '../SightingForm.css';
-// var files_array = []; // Setting in global scope for development.
 
 class SightingForm extends Component {
   constructor(props) {
@@ -53,7 +52,7 @@ class SightingForm extends Component {
       if (!snap) {
         let newSpecies = db.ref('species').child(sp);
         newSpecies.set({
-          genus: sp.split(' ')[0],
+          genus: sp.split(' ')[0], // Check.
           species: sp.split(' ')[1]
         });
       }
@@ -61,13 +60,7 @@ class SightingForm extends Component {
   }
 
   uploadFile(e) {
-    // e.preventDefault();
-    console.log('Photo uploading...', e.target.files);
-    // var file = event.target.files[0];
-    // if (!file.type.match('image.*')) {
-    //   window.alert('You can only share images. Please try again.');
-    //   return;
-    // }
+    // console.log('Photo uploading...', e.target.files); // Debugging.
     this.photoURL = e.target.files[0];
   }
 
@@ -75,16 +68,11 @@ class SightingForm extends Component {
     e.preventDefault();
     let newSightingRef = db.ref('sightings');
     let newSightingKey = db.ref('sightings').push().key;
-
-    // Added: uploadFile protocol for images
-
-    console.log('Photo chosen...', this.photoURL);
     let file = this.photoURL;
     if (!file.type.match('image.*')) {
       window.alert('You can only share images. Please try again.');
       return;
     }
-
     // To-do: save species to dictionary if it hasn't been logged already:
     this.writeSpecies();
     newSightingRef
@@ -99,11 +87,11 @@ class SightingForm extends Component {
       })
       .then(
         function(data) {
-          // Upload the image to Cloud Storage.
+          // Upload image to Cloud Storage:
           var filePath = 'sightingImages/' + newSightingKey;
           return storage.ref(filePath).put(file).then(
             function(snapshot) {
-              // Get the file's Storage URI and update the chat message placeholder.
+              // Get the file's Storage URI and update the reference:
               var fullPath = snapshot.metadata.fullPath;
               console.log('current data.', data);
               console.log('current snapshot', snapshot);
