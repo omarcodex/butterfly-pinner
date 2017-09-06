@@ -8,6 +8,7 @@ import storage from '../javascripts/firebase-storage';
 
 import SightingFormSubmit from './SightingFormSubmit';
 import SightingFormSelect from './SightingFormSelect';
+import IconPhoto from './IconPhoto';
 
 import '../SightingForm.css';
 
@@ -166,7 +167,12 @@ class SightingForm extends Component {
             style={{ display: 'none' }}
             onChange={this.uploadFile}
           />
-          <FloatingActionButton className="floatingButton" secondary={true} onClick={e => this.myInput.click()} />
+          <FloatingActionButton
+            className="floatingButton"
+            children={<IconPhoto />}
+            secondary={true}
+            onClick={e => this.myInput.click()}
+          />
         </div>
         <SightingFormSubmit />
       </form>
