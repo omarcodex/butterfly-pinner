@@ -1,0 +1,11 @@
+.sighting-form__container {
+  padding: 20px;
+}
+
+.sighting-form__form {
+  margin-bottom: 0;
+}
+
+.sighting-form__gps-button {
+  border: solid 1px red;
+}

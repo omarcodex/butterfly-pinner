@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-
-import db from '../javascripts/firebase';
-import storage from '../javascripts/firebase-storage';
+import firebase from '../../javascripts/firebase';
+import storage from '../../javascripts/firebase-storage';
 
 import SightingFormSubmit from './SightingFormSubmit';
 import SightingFormSelect from './SightingFormSelect';
-import IconPhoto from './IconPhoto';
+import IconPhoto from '../IconPhoto';
 
-import '../SightingForm.css';
+import store from '../../store/configureStore';
+
+import './SightingForm.css';
 
 class SightingForm extends Component {
   constructor(props) {
@@ -48,10 +49,11 @@ class SightingForm extends Component {
 
   writeSpecies() {
     let sp = this.state.scientificName;
-    db.ref().child('species/' + sp).once('value').then(snap => {
+    let snap;
+    firebase.database().ref().child('species/' + sp).once('value').then(snap => {
       snap = snap.val();
       if (!snap) {
-        let newSpecies = db.ref('species').child(sp);
+        let newSpecies = firebase.database().ref('species').child(sp);
         newSpecies.set({
           genus: sp.split(' ')[0], // Check.
           species: sp.split(' ')[1]
@@ -67,8 +69,8 @@ class SightingForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    let newSightingRef = db.ref('sightings');
-    let newSightingKey = db.ref('sightings').push().key;
+    let newSightingRef = firebase.database().ref('sightings');
+    let newSightingKey = firebase.database().ref('sightings').push().key;
     let file = this.photoURL;
     if (!file.type.match('image.*')) {
       window.alert('You can only share images. Please try again.');
@@ -136,7 +138,7 @@ class SightingForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form className="sighting-form__form" onSubmit={this.handleSubmit}>
         <TextField
           hintText="Scientific Name"
           fullWidth={true}

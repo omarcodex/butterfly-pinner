@@ -1,12 +1,14 @@
 import React, { Component } from "react";
+import { Card, CardTitle, CardText } from "material-ui/Card";
 
-import GuideRecord from "./GuideRecord";
+import GuideEntries from "./GuideEntries";
+import "./Guide.css";
 
-class GuideWrapper extends Component {
+class GuideContainer extends Component {
   constructor(props){
     super(props);
     this.state = {
-      data: [
+      entries: [
         {
           id: 1,
           scientificName: "Papilio eurymedon",
@@ -33,23 +35,19 @@ class GuideWrapper extends Component {
   }
 
   render(){
-    let records = this.state.data.map((record)=>{
-      return(
-        <GuideRecord
-          scientificName={record.scientificName}
-          familyName={record.familyName}
-          description={record.description}
-          photoUrl={record.photoUrl}
-          key={record.id}
-        />
-      )});
     return(
-      <div>
-        <h1>Butterfly Guide</h1>
-        {records}
+      <div className="page">
+        <Card className="guide__container">
+          <CardTitle title="Butterfly Guide"/>
+          <CardText>
+            <GuideEntries
+              entries={this.state.entries}
+            />
+          </CardText>
+        </Card>
       </div>
     )
   }
 }
 
-export default GuideWrapper;
+export default GuideContainer;
