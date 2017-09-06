@@ -114,7 +114,10 @@ class SightingForm extends Component {
     this.setState({
       scientificName: '',
       count: '',
-      sex: ''
+      sex: '',
+      lat: '',
+      lon: '',
+      photoURL: null
     });
   }
 
