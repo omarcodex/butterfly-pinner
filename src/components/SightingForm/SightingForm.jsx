@@ -4,6 +4,7 @@ import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import firebase from '../../javascripts/firebase';
 import storage from '../../javascripts/firebase-storage';
+// import UserProfile from './UserProfile'; // New.
 
 import SightingFormSubmit from './SightingFormSubmit';
 import SightingFormSelect from './SightingFormSelect';
@@ -50,16 +51,25 @@ class SightingForm extends Component {
   writeSpecies() {
     let sp = this.state.scientificName;
     let snap;
-    firebase.database().ref().child('species/' + sp).once('value').then(snap => {
-      snap = snap.val();
-      if (!snap) {
-        let newSpecies = firebase.database().ref('species').child(sp);
-        newSpecies.set({
-          genus: sp.split(' ')[0], // Check.
-          species: sp.split(' ')[1]
-        });
-      }
-    });
+    firebase
+      .database()
+      .ref()
+      .child('species/' + sp)
+      .once('value')
+      .then(snap => {
+        snap = snap.val();
+        if (!snap) {
+          let newSpecies = firebase
+            .database()
+            .ref('species')
+            .child(sp);
+          newSpecies.set({
+            rawData: sp,
+            genus: sp.split(' ')[0],
+            species: sp.split(' ')[1] || 'NA' // In case of incorrect input.
+          });
+        }
+      });
   }
 
   uploadFile(e) {
@@ -69,10 +79,17 @@ class SightingForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    let newSightingRef = firebase.database().ref('sightings');
-    let newSightingKey = firebase.database().ref('sightings').push().key;
-    let file = this.photoURL;
-    if (!file.type.match('image.*')) {
+    let newSightingRef = firebase
+      .database()
+      .ref('sightings')
+      .child(firebase.auth().currentUser.uid);
+    let newSightingKey = firebase
+      .database()
+      .ref('sightings')
+      .child(firebase.auth().currentUser.uid)
+      .push().key;
+    let file = this.photoURL || null;
+    if (file && !file.type.match('image.*')) {
       window.alert('You can only share images. Please try again.');
       return;
     }
@@ -86,23 +103,29 @@ class SightingForm extends Component {
         sex: this.state.sex,
         lat: this.state.lat,
         lon: this.state.lon,
-        photoURL: this.photoURL
+        photoURL: this.photoURL || 'NA'
       })
       .then(
         function(data) {
           // Upload image to Cloud Storage:
           var filePath = 'sightingImages/' + newSightingKey;
-          return storage.ref(filePath).put(file).then(
-            function(snapshot) {
-              // Get the file's Storage URI and update the reference:
-              var fullPath = snapshot.metadata.fullPath;
-              console.log('current data.', data);
-              console.log('current snapshot', snapshot);
-              return storage.ref(fullPath).getDownloadURL().then(function(url) {
-                newSightingRef.child(newSightingKey).update({ photoURL: url });
-              });
-            }.bind(this)
-          );
+          return storage
+            .ref(filePath)
+            .put(file)
+            .then(
+              function(snapshot) {
+                // Get the file's Storage URI and update the reference:
+                var fullPath = snapshot.metadata.fullPath;
+                console.log('current data.', data);
+                console.log('current snapshot', snapshot);
+                return storage
+                  .ref(fullPath)
+                  .getDownloadURL()
+                  .then(function(url) {
+                    newSightingRef.child(newSightingKey).update({ photoURL: url });
+                  });
+              }.bind(this)
+            );
         }.bind(this)
       )
       .catch(function(error) {

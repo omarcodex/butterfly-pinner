@@ -14,13 +14,11 @@ let config = {
 
 firebase.initializeApp(config);
 
-// // Optional global vars:
-// var currentUser = null;
-// var currentUserID = null;
-
 firebase.auth().onAuthStateChanged(firebaseUser => {
   if (firebaseUser) {
     // console.log('User signed in: ', JSON.stringify(firebaseUser));
+    // var currentUserFb = firebaseUser;
+    // var currentUserFbID = firebaseUser.uid;
     writeUserData(firebaseUser);
   } else {
     console.log('Not logged in!');
