@@ -14,23 +14,14 @@ let config = {
 
 firebase.initializeApp(config);
 
-var currentUser = null;
-var currentUserID = null;
+// // Optional global vars:
+// var currentUser = null;
+// var currentUserID = null;
 
 firebase.auth().onAuthStateChanged(firebaseUser => {
   if (firebaseUser) {
-    console.log('User signed in: ', JSON.stringify(firebaseUser));
-    console.log(JSON.stringify(firebaseUser.uid));
+    // console.log('User signed in: ', JSON.stringify(firebaseUser));
     writeUserData(firebaseUser);
-    // localStorage.removeItem(firebaseAuthKey);
-
-    // // here you could authenticate with you web server to get the
-    // // application specific token so that you do not have to
-    // // authenticate with firebase every time a user logs in
-    // localStorage.setItem(appTokenKey, user.uid);
-    //
-    // // store the token
-    // this.props.history.push('/app/home');
   } else {
     console.log('Not logged in!');
   }
@@ -46,8 +37,6 @@ function writeUserData(user) {
   var appUsersRef = firebase.database().ref('/app_users');
   var appUserRef = appUsersRef.child(user.uid);
   appUserRef.once('value').then(function(snapshot) {
-    // default doWhop writes first, so this check resulted in
-    // userData not being written changed set to update
     var userData = {
       displayName: user.displayName,
       photoURL: user.photoURL ? user.photoURL : 'NA',
