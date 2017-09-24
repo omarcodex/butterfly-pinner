@@ -1,35 +1,35 @@
-import React, { Component } from "react";
-import { Card, CardTitle, CardText } from "material-ui/Card";
-import TextField from "material-ui/TextField";
-import RaisedButton from "material-ui/RaisedButton";
-import Snackbar from "material-ui/Snackbar";
-import firebase from "../../javascripts/firebase";
-import "./LoginForm.css"
-import { loginUser } from "../../actions/userActions";
-import store from "../../store/configureStore";
+import React, { Component } from 'react';
+import { Card, CardTitle, CardText } from 'material-ui/Card';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import Snackbar from 'material-ui/Snackbar';
+import firebase from '../../javascripts/firebase';
+import './LoginForm.css';
+import { loginUser } from '../../actions/userActions';
+import store from '../../store/configureStore';
 
 class LoginFormContainer extends Component {
-
-  constructor(props){
+  constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
     this.handleSignout = this.handleSignout.bind(this);
     this.handleGoogleLogin = this.handleGoogleLogin.bind(this);
+    this.handleTwitterLogin = this.handleTwitterLogin.bind(this);
     this.handleNotification = this.handleNotification.bind(this);
     this.handleNotificationClose = this.handleNotificationClose.bind(this);
     this.state = {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
       notificationOpen: false,
-      notificationMessage: ""
-    }
+      notificationMessage: ''
+    };
   }
 
   handleChange(e) {
-    const val = e.target.value
-    const attr = e.target.getAttribute("data-target-field")
+    const val = e.target.value;
+    const attr = e.target.getAttribute('data-target-field');
     this.setState({
       [attr]: val
     });
@@ -38,22 +38,22 @@ class LoginFormContainer extends Component {
   handleLogin(e) {
     const auth = firebase.auth();
     const promise = auth.signInWithEmailAndPassword(this.state.email, this.state.password);
-    promise.catch( e => console.log(e.message) );
-    promise.then( response => {
+    promise.catch(e => console.log(e.message));
+    promise.then(response => {
       console.log(response);
-      this.handleNotification("Succesfully signed in!");
+      this.handleNotification('Succesfully signed in!');
     });
   }
 
   handleSignup(e) {
     const auth = firebase.auth();
     const promise = auth.createUserWithEmailAndPassword(this.state.email, this.state.password);
-    promise.catch( e => console.log(e.message) );
+    promise.catch(e => console.log(e.message));
   }
 
   handleSignout(e) {
     const promise = firebase.auth().signOut();
-    promise.then( e => this.handleNotification("Succesfully logged out!") );
+    promise.then(e => this.handleNotification('Succesfully logged out!'));
   }
 
   handleNotification(message) {
@@ -65,32 +65,55 @@ class LoginFormContainer extends Component {
 
   handleNotificationClose() {
     this.setState({
-      notificationOpen: false,
+      notificationOpen: false
     });
-  };
+  }
 
   handleGoogleLogin(e) {
     const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider).then(function(result) {
-      let args = {
-        user: result.user,
-        token: result.credential.accessToken
-      }
-      store.dispatch(loginUser(args));
-    }).catch(function(error) {
-      // var errorCode = error.code;
-      // var errorMessage = error.message;
-      // var email = error.email;
-      // var credential = error.credential;
-    });
-    
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then(function(result) {
+        let args = {
+          user: result.user,
+          token: result.credential.accessToken
+        };
+        store.dispatch(loginUser(args));
+      })
+      .catch(function(error) {
+        // var errorCode = error.code;
+        // var errorMessage = error.message;
+        // var email = error.email;
+        // var credential = error.credential;
+      });
   }
 
-  render(){
-    return(
+  handleTwitterLogin(e) {
+    const provider = new firebase.auth.TwitterAuthProvider();
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then(function(result) {
+        let args = {
+          user: result.user,
+          token: result.credential.accessToken
+        };
+        store.dispatch(loginUser(args));
+      })
+      .catch(function(error) {
+        // var errorCode = error.code;
+        // var errorMessage = error.message;
+        // var email = error.email;
+        // var credential = error.credential;
+      });
+  }
+
+  render() {
+    return (
       <div className="page">
         <Card className="login-form__container">
-          <CardTitle title="Login" style={{paddingBottom: 0}}/>
+          <CardTitle title="Login" style={{ paddingBottom: 0 }} />
           <CardText>
             <TextField
               className="login-form__email-field"
@@ -109,17 +132,8 @@ class LoginFormContainer extends Component {
             />
             <br />
             <br />
-            <RaisedButton
-              className="login-form__button"
-              label="Log in"
-              primary={true}
-              onClick={this.handleLogin}
-            />
-            <RaisedButton
-              className="login-form__button"
-              label="Sign up"
-              onClick={this.handleSignup}
-            />
+            <RaisedButton className="login-form__button" label="Log in" primary={true} onClick={this.handleLogin} />
+            <RaisedButton className="login-form__button" label="Sign up" onClick={this.handleSignup} />
             <br />
             <hr />
             <RaisedButton
@@ -127,6 +141,12 @@ class LoginFormContainer extends Component {
               label="Log in with Google"
               primary={true}
               onClick={this.handleGoogleLogin}
+            />
+            <RaisedButton
+              className="login-form__twitter-login-btn"
+              label="Log in with Twitter"
+              primary={true}
+              onClick={this.handleTwitterLogin}
             />
           </CardText>
           <Snackbar
@@ -137,7 +157,7 @@ class LoginFormContainer extends Component {
           />
         </Card>
       </div>
-    )
+    );
   }
 }
 
