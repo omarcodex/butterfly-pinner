@@ -1,7 +1,7 @@
 import * as firebase from 'firebase';
 
-import { testAction } from "../actions/userActions";
-import store from "../store/configureStore";
+import { testAction } from '../actions/userActions';
+import store from '../store/configureStore';
 
 let config = {
   apiKey: 'AIzaSyBhSdMEX0P-QGwfZLOYLApr63rmERuxb_o',
@@ -14,17 +14,36 @@ let config = {
 
 firebase.initializeApp(config);
 
-firebase.auth().onAuthStateChanged(firebaseUser=>{
+firebase.auth().onAuthStateChanged(firebaseUser => {
   if (firebaseUser) {
-    // console.log(firebaseUser);
+    // console.log('User signed in: ', JSON.stringify(firebaseUser));
+    // var currentUserFb = firebaseUser;
+    // var currentUserFbID = firebaseUser.uid;
+    writeUserData(firebaseUser);
   } else {
-    console.log("Not logged in!");
+    console.log('Not logged in!');
   }
 });
 
-export default firebase;
+let unsubscribe = store.subscribe(
+  () =>
+    // console.log(store.getState())
+    2 + 2
+);
 
-let unsubscribe = store.subscribe(() =>
-  // console.log(store.getState())
-  2+2
-)
+function writeUserData(user) {
+  var appUsersRef = firebase.database().ref('/app_users');
+  var appUserRef = appUsersRef.child(user.uid);
+  appUserRef.once('value').then(function(snapshot) {
+    var userData = {
+      displayName: user.displayName,
+      photoURL: user.photoURL ? user.photoURL : 'NA',
+      uid: user.uid,
+      email: user.email,
+      lastLoginDatePST: Date()
+    };
+    appUserRef.update(userData);
+  });
+}
+
+export default firebase;
