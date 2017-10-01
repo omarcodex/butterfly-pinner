@@ -11,6 +11,7 @@ import GuideContainer from './Guide/GuideContainer';
 import UserProfileContainer from './UserProfile/UserProfileContainer';
 import LoginFormContainer from './LoginForm/LoginFormContainer';
 import Login from '../pages/Login';
+import PageWrapper from '../components/PageWrapper';
 
 import './App.css';
 
@@ -37,11 +38,9 @@ class App extends Component {
         <Router>
           <div className="App">
             <Route exact path="/" component={Login} />
-            <div className="container">
-              <Route path="/profile" component={Profile} />
-              <Route path="/guide" component={Guide} />
-              <Route path="/sighting" component={Sighting} />
-            </div>
+            <Route path="/profile" component={Profile} />
+            <Route path="/guide" component={Guide} />
+            <Route path="/sighting" component={Sighting} />
           </div>
         </Router>
       </MuiThemeProvider>
@@ -49,25 +48,31 @@ class App extends Component {
   }
 }
 
-const Profile = () => {
+const Profile = () => (
   <div>
     <Navigation />
-    <UserProfileContainer />
-  </div>;
-};
+    <PageWrapper>
+      <UserProfileContainer />
+    </PageWrapper>
+  </div>
+);
 
-const Sighting = () => {
+const Sighting = () => (
   <div>
     <Navigation />
-    <SightingFormContainer className="sighting-form" />
-  </div>;
-};
+    <PageWrapper>
+      <SightingFormContainer className="sighting-form" />
+    </PageWrapper>
+  </div>
+);
 
-const Guide = () => {
+const Guide = () => (
   <div>
     <Navigation />
-    <GuideContainer />
-  </div>;
-};
+    <PageWrapper>
+      <GuideContainer />
+    </PageWrapper>
+  </div>
+);
 
 export default App;
