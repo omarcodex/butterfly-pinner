@@ -8,6 +8,14 @@ import './LoginForm.css';
 import { loginUser } from '../../actions/userActions';
 import store from '../../store/configureStore';
 
+import styled from 'styled-components';
+
+const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 class LoginFormContainer extends Component {
   constructor(props) {
     super(props);
@@ -37,7 +45,10 @@ class LoginFormContainer extends Component {
 
   handleLogin(e) {
     const auth = firebase.auth();
-    const promise = auth.signInWithEmailAndPassword(this.state.email, this.state.password);
+    const promise = auth.signInWithEmailAndPassword(
+      this.state.email,
+      this.state.password
+    );
     promise.catch(e => console.log(e.message));
     promise.then(response => {
       console.log(response);
@@ -47,7 +58,10 @@ class LoginFormContainer extends Component {
 
   handleSignup(e) {
     const auth = firebase.auth();
-    const promise = auth.createUserWithEmailAndPassword(this.state.email, this.state.password);
+    const promise = auth.createUserWithEmailAndPassword(
+      this.state.email,
+      this.state.password
+    );
     promise.catch(e => console.log(e.message));
   }
 
@@ -111,51 +125,67 @@ class LoginFormContainer extends Component {
 
   render() {
     return (
-      <div className="page">
-        <Card className="login-form__container">
-          <CardTitle title="Login" style={{ paddingBottom: 0 }} />
-          <CardText>
-            <TextField
-              className="login-form__email-field"
-              data-target-field="email"
-              hintText="Email"
-              fullWidth={true}
-              onChange={this.handleChange}
-            />
-            <TextField
-              className="login-form__password-field"
-              data-target-field="password"
-              hintText="Password"
-              fullWidth={true}
-              type="password"
-              onChange={this.handleChange}
-            />
-            <br />
-            <br />
-            <RaisedButton className="login-form__button" label="Log in" primary={true} onClick={this.handleLogin} />
-            <RaisedButton className="login-form__button" label="Sign up" onClick={this.handleSignup} />
-            <br />
-            <hr />
-            <RaisedButton
-              className="login-form__google-login-btn"
-              label="Log in with Google"
-              primary={true}
-              onClick={this.handleGoogleLogin}
-            />
-            <RaisedButton
-              className="login-form__twitter-login-btn"
-              label="Log in with Twitter"
-              primary={true}
-              onClick={this.handleTwitterLogin}
-            />
-          </CardText>
-          <Snackbar
-            open={this.state.notificationOpen}
-            message={this.state.notificationMessage}
-            autoHideDuration={4000}
-            onRequestClose={this.handleNotificationClose}
+      <div>
+        <div>
+          <TextField
+            className="login-form__email-field"
+            data-target-field="email"
+            hintText="Email"
+            fullWidth={true}
+            onChange={this.handleChange}
           />
-        </Card>
+          <TextField
+            className="login-form__password-field"
+            data-target-field="password"
+            hintText="Password"
+            fullWidth={true}
+            type="password"
+            onChange={this.handleChange}
+          />
+          <br />
+          <br />
+          <RaisedButton
+            className="login-form__button"
+            label="Log in"
+            primary={true}
+            onClick={this.handleLogin}
+            fullWidth={true}
+            labelStyle={{ textTransform: 'capitalize', fontSize: '1em' }}
+          />
+          <br />
+          <br />
+          <RaisedButton
+            className="login-form__button"
+            label="Sign up"
+            backgroundColor="#A7EB81"
+            onClick={this.handleSignup}
+            fullWidth={true}
+            labelStyle={{ textTransform: 'capitalize', fontSize: '1em' }}
+          />
+        </div>
+        <hr />
+        <RaisedButton
+          className="login-form__google-login-btn"
+          label="Log in with Google"
+          primary={true}
+          onClick={this.handleGoogleLogin}
+          buttonStyle={{ marginRight: '5px' }}
+          labelStyle={{ textTransform: 'capitalize', fontSize: '1em' }}
+        />
+        <RaisedButton
+          className="login-form__twitter-login-btn"
+          label="Log in with Twitter"
+          primary={true}
+          onClick={this.handleTwitterLogin}
+          buttonStyle={{ marginLeft: '5px' }}
+          labelStyle={{ textTransform: 'capitalize', fontSize: '1em' }}
+        />
+        <Snackbar
+          open={this.state.notificationOpen}
+          message={this.state.notificationMessage}
+          autoHideDuration={4000}
+          onRequestClose={this.handleNotificationClose}
+        />
       </div>
     );
   }

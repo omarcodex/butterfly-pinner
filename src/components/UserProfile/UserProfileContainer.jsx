@@ -17,8 +17,8 @@ class UserProfileContainer extends Component {
     let ref = firebase
       .database()
       .ref()
-      .child('sightings')
-      .child(firebase.auth().currentUser.uid);
+      .child('sightings');
+    // .child(firebase.auth().currentUser.uid);
     var that = this;
     ref.once('value').then(function(snap) {
       sightings = Object.values(snap.val());
@@ -31,7 +31,10 @@ class UserProfileContainer extends Component {
   render() {
     return (
       <div className="page">
-        <UserProfile user={store.getState().user} sightings={this.state.sightings} />
+        <UserProfile
+          user={store.getState().user}
+          sightings={this.state.sightings}
+        />
       </div>
     );
   }
