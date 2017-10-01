@@ -15,12 +15,11 @@ import "./App.css";
 
 const muiTheme = getMuiTheme({
   palette: {
-    "primary1Color": "#d32f2f",
-    "accent1Color": "#ffab40"
+    primary1Color: '#457CDB',
+    accent1Color: '#A7EB81'
   },
-  fontFamily: 'Raleway',
-  appBar: {
-  },
+  fontFamily: 'PT Sans',
+  appBar: {}
 });
 
 
