@@ -16,20 +16,11 @@ export const fb = firebase.initializeApp(config);
 
 firebase.auth().onAuthStateChanged(firebaseUser => {
   if (firebaseUser) {
-    // console.log('User signed in: ', JSON.stringify(firebaseUser));
-    // var currentUserFb = firebaseUser;
-    // var currentUserFbID = firebaseUser.uid;
     writeUserData(firebaseUser);
   } else {
     console.log('Not logged in!');
   }
 });
-
-let unsubscribe = store.subscribe(
-  () =>
-    // console.log(store.getState())
-    2 + 2
-);
 
 function writeUserData(user) {
   var appUsersRef = firebase.database().ref('/app_users');

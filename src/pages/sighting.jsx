@@ -1,11 +1,11 @@
 import React from 'react';
-import Navigation from '../components/Navigation';
+import Navbar from '../components/Navbar/Navbar';
 import PageWrapper from '../components/PageWrapper';
 import SightingFormContainer from '../components/SightingForm/SightingFormContainer';
 
 const Sighting = () => (
   <div>
-    <Navigation />
+    <Navbar />
     <PageWrapper>
       <SightingFormContainer className="sighting-form" />
     </PageWrapper>

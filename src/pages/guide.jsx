@@ -1,11 +1,11 @@
 import React from 'react';
-import Navigation from '../components/Navigation';
+import Navbar from '../components/Navbar/Navbar';
 import PageWrapper from '../components/PageWrapper';
 import GuideContainer from '../components/Guide/GuideContainer';
 
 const Guide = () => (
   <div>
-    <Navigation />
+    <Navbar />
     <PageWrapper>
       <GuideContainer />
     </PageWrapper>
