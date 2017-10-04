@@ -2,6 +2,7 @@ import * as firebase from 'firebase';
 
 import { testAction } from '../actions/userActions';
 import store from '../store/configureStore';
+import { loginUser } from '../actions/userActions';
 
 let config = {
   apiKey: 'AIzaSyBhSdMEX0P-QGwfZLOYLApr63rmERuxb_o',
@@ -15,17 +16,29 @@ let config = {
 firebase.initializeApp(config);
 
 export const auth = firebase.auth();
+export const db = firebase.database();
 
-auth.onAuthStateChanged(firebaseUser => {
-  if (firebaseUser) {
-    writeUserData(firebaseUser);
+auth.onAuthStateChanged(fbUser => {
+  if (fbUser) {
+    writeUserData(fbUser);
+    store.dispatch(
+      loginUser({
+        uid: fbUser.uid,
+        token: fbUser.refreshToken
+      })
+    );
   } else {
-    console.log('Not logged in!');
+    store.dispatch(
+      loginUser({
+        uid: null,
+        token: null
+      })
+    );
   }
 });
 
 function writeUserData(user) {
-  var appUsersRef = firebase.database().ref('/app_users');
+  var appUsersRef = db.ref('/app_users');
   var appUserRef = appUsersRef.child(user.uid);
   appUserRef.once('value').then(function(snapshot) {
     var userData = {

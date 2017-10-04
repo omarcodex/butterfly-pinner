@@ -83,17 +83,12 @@ class LoginFormContainer extends Component {
 
   handleGoogleLogin(e) {
     const provider = new firebase.auth.GoogleAuthProvider();
-    let r = this.props.triggerRedirect;
+    const r = this.props.triggerRedirect;
     firebase
       .auth()
       .signInWithPopup(provider)
       .then(function(result) {
-        let args = {
-          user: result.user,
-          token: result.credential.accessToken
-        };
         console.log(result);
-        store.dispatch(loginUser(args));
         r();
       })
       .catch(function(error) {
@@ -103,15 +98,13 @@ class LoginFormContainer extends Component {
 
   handleTwitterLogin(e) {
     const provider = new firebase.auth.TwitterAuthProvider();
+    const r = this.props.triggerRedirect;
     firebase
       .auth()
       .signInWithPopup(provider)
       .then(function(result) {
-        let args = {
-          user: result.user,
-          token: result.credential.accessToken
-        };
-        store.dispatch(loginUser(args));
+        console.log(result);
+        r();
       })
       .catch(function(error) {
         console.log(error);
