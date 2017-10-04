@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 
 import Login from './pages/login';
 import Profile from './pages/profile';
 import Guide from './pages/guide';
 import Sighting from './pages/sighting';
+import Home from './pages/home';
 import { fb } from './javascripts/firebase';
 
 const muiTheme = getMuiTheme({
@@ -18,6 +19,26 @@ const muiTheme = getMuiTheme({
   fontFamily: 'PT Sans',
   appBar: {}
 });
+
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  const cU = fb.auth().currentUser;
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        cU ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: '/login',
+              state: { from: props.location }
+            }}
+          />
+        )}
+    />
+  );
+};
 
 class App extends Component {
   constructor(props) {
@@ -32,10 +53,11 @@ class App extends Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <Router>
           <div className="App">
-            <Route exact path="/" component={Login} />
-            <Route path="/profile" component={Profile} />
-            <Route path="/guide" component={Guide} />
-            <Route path="/sighting" component={Sighting} />
+            <Route exact path="/" component={Home} />
+            <Route path="/login" component={Login} />
+            <PrivateRoute path="/profile" component={Profile} />
+            <PrivateRoute path="/guide" component={Guide} />
+            <PrivateRoute path="/sighting" component={Sighting} />
           </div>
         </Router>
       </MuiThemeProvider>

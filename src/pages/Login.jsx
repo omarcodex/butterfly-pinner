@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const H5 = styled.h5`
+const H2 = styled.h2`
   color: #457cdb;
   text-align: center;
 `;
@@ -35,6 +35,7 @@ class Login extends Component {
   }
 
   triggerRedirect() {
+    console.log('triggerRedirect!');
     this.setState({
       redirect: true
     });
@@ -42,11 +43,11 @@ class Login extends Component {
 
   render() {
     switch (this.state.redirect) {
-      case true:
+      case false:
         return (
           <Wrapper>
             <Div>
-              <H5>Log in to your account</H5>
+              <H2>Log in to your account</H2>
               <LoginFormContainer triggerRedirect={this.triggerRedirect} />
             </Div>
           </Wrapper>
