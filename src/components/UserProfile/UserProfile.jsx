@@ -4,17 +4,12 @@ import Avatar from 'material-ui/Avatar';
 import SightingList from './SightingList';
 
 const UserProfile = props => {
-  let name, photoUrl, email;
-  if (props.user) {
-    name = props.user.displayName;
-    photoUrl = props.user.photoURL;
-  }
   return (
     <Card>
-      <CardTitle title={name + "'s Profile"} />
+      <CardTitle title={props.user.displayName + "'s Profile"} />
       <CardText className="row">
         <div className="one-third column">
-          <Avatar src={photoUrl} size={100} />
+          <Avatar src={props.user.photoURL} size={100} />
         </div>
         <div className="two-thirds column" />
         <hr />

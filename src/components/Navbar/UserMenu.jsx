@@ -1,18 +1,22 @@
 import React from 'react';
 import MenuItem from 'material-ui/MenuItem';
 import IconMenu from 'material-ui/IconMenu';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { Link } from 'react-router-dom';
 import IconButton from 'material-ui/IconButton';
+
+import RaisedButton from 'material-ui/RaisedButton';
+import ActionAndroid from 'material-ui/svg-icons/navigation/expand-more';
 
 const UserMenu = props => {
   return (
     <IconMenu
-      iconStyle={{ color: 'white' }}
       iconButtonElement={
-        <IconButton>
-          <MoreVertIcon />
-        </IconButton>
+        <RaisedButton
+          label={`Logged in as ${props.user.displayName}`}
+          labelPosition="before"
+          secondary={true}
+          icon={<ActionAndroid />}
+        />
       }
     >
       <Link to="/profile">

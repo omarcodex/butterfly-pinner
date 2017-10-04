@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import firebase, { auth, db } from '../../javascripts/firebase';
-
 import UserProfile from './UserProfile';
 import store from '../../store/configureStore';
 

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import firebase, { auth } from '../../javascripts/firebase';
 import SlideOutMenu from './SlideOutMenu';
 import UserMenu from './UserMenu';
+import store from '../../store/configureStore';
 
 class Navbar extends Component {
   constructor(props) {
@@ -48,7 +49,10 @@ const Nav = props => {
       onLeftIconButtonTouchTap={props.handleToggle}
       iconElementRight={
         auth.currentUser ? (
-          <UserMenu handleSignout={props.handleSignout} />
+          <UserMenu
+            handleSignout={props.handleSignout}
+            user={store.getState().user}
+          />
         ) : (
           <LoginButton />
         )

@@ -6,3 +6,7 @@ export const loginUser = args => {
     token: args.token
   };
 };
+
+export const logoutUser = () => ({
+  type: 'LOGOUT_USER'
+});

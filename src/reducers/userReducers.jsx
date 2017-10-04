@@ -12,6 +12,12 @@ const butterflyPinnerApp = (state = initialState, action) => {
         uid: action.uid,
         token: action.token
       });
+    case 'LOGOUT_USER':
+      return Object.assign({}, state, {
+        user: null,
+        uid: null,
+        token: null
+      });
     default:
       return state;
   }
