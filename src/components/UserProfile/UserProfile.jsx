@@ -2,15 +2,12 @@ import React from 'react';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import SightingList from './SightingList';
-import './UserProfile.css';
 
 const UserProfile = props => {
-  let name, photoUrl, email, uid;
+  let name, photoUrl, email;
   if (props.user) {
     name = props.user.displayName;
     photoUrl = props.user.photoURL;
-    // email = props.user.email;
-    // uid = props.user.uid;
   }
   return (
     <Card>

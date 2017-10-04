@@ -23,6 +23,7 @@ auth.onAuthStateChanged(fbUser => {
     writeUserData(fbUser);
     store.dispatch(
       loginUser({
+        user: fbUser,
         uid: fbUser.uid,
         token: fbUser.refreshToken
       })
