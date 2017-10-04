@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
-import firebase, { fb } from '../../javascripts/firebase';
+import firebase from '../../javascripts/firebase';
 import { loginUser } from '../../actions/userActions';
 import store from '../../store/configureStore';
 
@@ -42,7 +42,7 @@ class LoginFormContainer extends Component {
   }
 
   handleLogin(e) {
-    const auth = fb.auth();
+    const auth = firebase.auth();
     const promise = auth.signInWithEmailAndPassword(
       this.state.email,
       this.state.password
@@ -55,7 +55,7 @@ class LoginFormContainer extends Component {
   }
 
   handleSignup(e) {
-    const auth = fb.auth();
+    const auth = firebase.auth();
     const promise = auth.createUserWithEmailAndPassword(
       this.state.email,
       this.state.password
@@ -64,7 +64,7 @@ class LoginFormContainer extends Component {
   }
 
   handleSignout(e) {
-    const promise = fb.auth().signOut();
+    const promise = firebase.auth().signOut();
     promise.then(e => this.handleNotification('Succesfully logged out!'));
   }
 
@@ -83,8 +83,8 @@ class LoginFormContainer extends Component {
 
   handleGoogleLogin(e) {
     const provider = new firebase.auth.GoogleAuthProvider();
-    let redirect = this.props.triggerRedirect;
-    fb
+    let r = this.props.triggerRedirect;
+    firebase
       .auth()
       .signInWithPopup(provider)
       .then(function(result) {
@@ -92,8 +92,9 @@ class LoginFormContainer extends Component {
           user: result.user,
           token: result.credential.accessToken
         };
+        console.log(result);
         store.dispatch(loginUser(args));
-        redirect();
+        r();
       })
       .catch(function(error) {
         console.log(error);
@@ -102,7 +103,7 @@ class LoginFormContainer extends Component {
 
   handleTwitterLogin(e) {
     const provider = new firebase.auth.TwitterAuthProvider();
-    fb
+    firebase
       .auth()
       .signInWithPopup(provider)
       .then(function(result) {

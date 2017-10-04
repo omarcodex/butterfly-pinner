@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Link } from 'react-router-dom';
-import { fb } from '../../javascripts/firebase';
+import firebase from '../../javascripts/firebase';
 import SlideOutMenu from './SlideOutMenu';
 import UserMenu from './UserMenu';
 
@@ -20,7 +20,7 @@ class Navbar extends Component {
   handleClose = () => this.setState({ open: false });
 
   handleSignout(e) {
-    const promise = fb.auth().signOut();
+    const promise = firebase.auth().signOut();
     promise.then();
   }
 
@@ -47,7 +47,7 @@ const Nav = props => {
       title="Butterfly Pinner"
       onLeftIconButtonTouchTap={props.handleToggle}
       iconElementRight={
-        fb.auth().currentUser ? (
+        firebase.auth().currentUser ? (
           <UserMenu handleSignout={props.handleSignout} />
         ) : (
           <LoginButton />

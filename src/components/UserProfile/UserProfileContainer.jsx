@@ -18,7 +18,7 @@ class UserProfileContainer extends Component {
       .database()
       .ref()
       .child('sightings');
-    // .child(fb.auth().currentUser.uid);
+    // .child(firebase.auth().currentUser.uid);
     var that = this;
     ref.once('value').then(function(snap) {
       sightings = Object.values(snap.val());

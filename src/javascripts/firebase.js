@@ -12,7 +12,7 @@ let config = {
   messagingSenderId: '1000022264881'
 };
 
-export const fb = firebase.initializeApp(config);
+firebase.initializeApp(config);
 
 firebase.auth().onAuthStateChanged(firebaseUser => {
   if (firebaseUser) {
