@@ -14,7 +14,9 @@ let config = {
 
 firebase.initializeApp(config);
 
-firebase.auth().onAuthStateChanged(firebaseUser => {
+export const auth = firebase.auth();
+
+auth.onAuthStateChanged(firebaseUser => {
   if (firebaseUser) {
     writeUserData(firebaseUser);
   } else {

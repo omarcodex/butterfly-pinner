@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import firebase from '../../javascripts/firebase';
+import firebase, { auth } from '../../javascripts/firebase';
 import storage from '../../javascripts/firebase-storage';
 // import UserProfile from './UserProfile'; // New.
 
@@ -82,11 +82,11 @@ class SightingForm extends Component {
     let newSightingRef = firebase
       .database()
       .ref('sightings')
-      .child(firebase.auth().currentUser.uid);
+      .child(auth.currentUser.uid);
     let newSightingKey = firebase
       .database()
       .ref('sightings')
-      .child(firebase.auth().currentUser.uid)
+      .child(auth.currentUser.uid)
       .push().key;
     let file = this.photoURL || null;
     if (file && !file.type.match('image.*')) {
