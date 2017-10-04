@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import firebase from '../../javascripts/firebase';
+import { fb } from '../../javascripts/firebase';
 import storage from '../../javascripts/firebase-storage';
 // import UserProfile from './UserProfile'; // New.
 
@@ -44,14 +44,16 @@ class SightingForm extends Component {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.showPosition);
     } else {
-      this.props.handleNotification('Geolocation is not supported by this browser.');
+      this.props.handleNotification(
+        'Geolocation is not supported by this browser.'
+      );
     }
   }
 
   writeSpecies() {
     let sp = this.state.scientificName;
     let snap;
-    firebase
+    fb
       .database()
       .ref()
       .child('species/' + sp)
@@ -59,7 +61,7 @@ class SightingForm extends Component {
       .then(snap => {
         snap = snap.val();
         if (!snap) {
-          let newSpecies = firebase
+          let newSpecies = fb
             .database()
             .ref('species')
             .child(sp);
@@ -79,14 +81,14 @@ class SightingForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    let newSightingRef = firebase
+    let newSightingRef = fb
       .database()
       .ref('sightings')
-      .child(firebase.auth().currentUser.uid);
-    let newSightingKey = firebase
+      .child(fb.auth().currentUser.uid);
+    let newSightingKey = fb
       .database()
       .ref('sightings')
-      .child(firebase.auth().currentUser.uid)
+      .child(fb.auth().currentUser.uid)
       .push().key;
     let file = this.photoURL || null;
     if (file && !file.type.match('image.*')) {
@@ -122,14 +124,19 @@ class SightingForm extends Component {
                   .ref(fullPath)
                   .getDownloadURL()
                   .then(function(url) {
-                    newSightingRef.child(newSightingKey).update({ photoURL: url });
+                    newSightingRef
+                      .child(newSightingKey)
+                      .update({ photoURL: url });
                   });
               }.bind(this)
             );
         }.bind(this)
       )
       .catch(function(error) {
-        console.error('There was an error uploading a file to Cloud Storage:', error);
+        console.error(
+          'There was an error uploading a file to Cloud Storage:',
+          error
+        );
       });
     this.resetState();
     this.props.handleNotification('Record successfully added to the database.');
@@ -176,10 +183,17 @@ class SightingForm extends Component {
           onChange={this.handleChange}
           data-target-field="count"
         />
-        <SightingFormSelect handleChange={this.handleChange} value={this.state.sex} />
+        <SightingFormSelect
+          handleChange={this.handleChange}
+          value={this.state.sex}
+        />
         <TextField hintText="Latitude" value={this.state.lat} />
         <TextField hintText="Longitude" value={this.state.lon} />
-        <FlatButton label="Get GPS Coordinates" primary={true} onClick={this.getPosition} />
+        <FlatButton
+          label="Get GPS Coordinates"
+          primary={true}
+          onClick={this.getPosition}
+        />
         <br />
         <br />
         <div>

@@ -8,6 +8,7 @@ import Login from './pages/login';
 import Profile from './pages/profile';
 import Guide from './pages/guide';
 import Sighting from './pages/sighting';
+import { fb } from './javascripts/firebase';
 
 const muiTheme = getMuiTheme({
   palette: {

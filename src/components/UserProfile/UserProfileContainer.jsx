@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import firebase from '../../javascripts/firebase';
+import fb from '../../javascripts/firebase';
 
 import UserProfile from './UserProfile';
 import store from '../../store/configureStore';
@@ -14,11 +14,11 @@ class UserProfileContainer extends Component {
 
   componentDidMount() {
     let sightings;
-    let ref = firebase
+    let ref = fb
       .database()
       .ref()
       .child('sightings');
-    // .child(firebase.auth().currentUser.uid);
+    // .child(fb.auth().currentUser.uid);
     var that = this;
     ref.once('value').then(function(snap) {
       sightings = Object.values(snap.val());
