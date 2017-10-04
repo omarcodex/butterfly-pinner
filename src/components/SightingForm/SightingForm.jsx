@@ -12,8 +12,6 @@ import IconPhoto from '../IconPhoto';
 
 import store from '../../store/configureStore';
 
-import './SightingForm.css';
-
 class SightingForm extends Component {
   constructor(props) {
     super(props);
@@ -168,7 +166,7 @@ class SightingForm extends Component {
 
   render() {
     return (
-      <form className="sighting-form__form" onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit}>
         <TextField
           hintText="Scientific Name"
           fullWidth={true}
