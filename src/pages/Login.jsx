@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import LoginFormContainer from '../components/LoginForm/LoginFormContainer';
+import Home from './home';
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -24,13 +25,36 @@ const Div = styled.div`
   max-width: 400px;
 `;
 
-const Home = () => (
-  <Wrapper>
-    <Div>
-      <H5>Log in to your account</H5>
-      <LoginFormContainer />
-    </Div>
-  </Wrapper>
-);
+class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.triggerRedirect = this.triggerRedirect.bind(this);
+    this.state = {
+      redirect: false
+    };
+  }
 
-export default Home;
+  triggerRedirect() {
+    this.setState({
+      redirect: true
+    });
+  }
+
+  render() {
+    switch (this.state.redirect) {
+      case true:
+        return (
+          <Wrapper>
+            <Div>
+              <H5>Log in to your account</H5>
+              <LoginFormContainer triggerRedirect={this.triggerRedirect} />
+            </Div>
+          </Wrapper>
+        );
+      default:
+        return <Home />;
+    }
+  }
+}
+
+export default Login;

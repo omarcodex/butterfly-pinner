@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { Card, CardTitle, CardText } from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
 import firebase from '../../javascripts/firebase';
-import './LoginForm.css';
 import { loginUser } from '../../actions/userActions';
 import store from '../../store/configureStore';
 
@@ -94,12 +92,10 @@ class LoginFormContainer extends Component {
           token: result.credential.accessToken
         };
         store.dispatch(loginUser(args));
+        this.props.triggerRedirect();
       })
       .catch(function(error) {
-        // var errorCode = error.code;
-        // var errorMessage = error.message;
-        // var email = error.email;
-        // var credential = error.credential;
+        console.log(error);
       });
   }
 
@@ -116,10 +112,7 @@ class LoginFormContainer extends Component {
         store.dispatch(loginUser(args));
       })
       .catch(function(error) {
-        // var errorCode = error.code;
-        // var errorMessage = error.message;
-        // var email = error.email;
-        // var credential = error.credential;
+        console.log(error);
       });
   }
 
@@ -128,14 +121,12 @@ class LoginFormContainer extends Component {
       <div>
         <div>
           <TextField
-            className="login-form__email-field"
             data-target-field="email"
             hintText="Email"
             fullWidth={true}
             onChange={this.handleChange}
           />
           <TextField
-            className="login-form__password-field"
             data-target-field="password"
             hintText="Password"
             fullWidth={true}
@@ -145,7 +136,6 @@ class LoginFormContainer extends Component {
           <br />
           <br />
           <RaisedButton
-            className="login-form__button"
             label="Log in"
             primary={true}
             onClick={this.handleLogin}
@@ -155,7 +145,6 @@ class LoginFormContainer extends Component {
           <br />
           <br />
           <RaisedButton
-            className="login-form__button"
             label="Sign up"
             backgroundColor="#A7EB81"
             onClick={this.handleSignup}
@@ -165,7 +154,6 @@ class LoginFormContainer extends Component {
         </div>
         <hr />
         <RaisedButton
-          className="login-form__google-login-btn"
           label="Log in with Google"
           primary={true}
           onClick={this.handleGoogleLogin}
@@ -173,7 +161,6 @@ class LoginFormContainer extends Component {
           labelStyle={{ textTransform: 'capitalize', fontSize: '1em' }}
         />
         <RaisedButton
-          className="login-form__twitter-login-btn"
           label="Log in with Twitter"
           primary={true}
           onClick={this.handleTwitterLogin}
