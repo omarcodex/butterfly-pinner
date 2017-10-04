@@ -19,6 +19,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "styled-components": "^2.2.0"
+    "styled-components": "^2.2.0",
+    "redux-logger": "^3.0.6"
   }
 }

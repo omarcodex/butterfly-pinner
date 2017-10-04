@@ -9,11 +9,11 @@ const UserProfile = props => {
   if (props.user) {
     name = props.user.displayName;
     photoUrl = props.user.photoURL;
-    email = props.user.email;
-    uid = props.user.uid;
+    // email = props.user.email;
+    // uid = props.user.uid;
   }
   return (
-    <Card className="user-profile__container">
+    <Card>
       <CardTitle title={name + "'s Profile"} />
       <CardText className="row">
         <div className="one-third column">
