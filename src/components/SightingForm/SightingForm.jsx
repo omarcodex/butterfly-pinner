@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import { fb } from '../../javascripts/firebase';
+import firebase, { auth } from '../../javascripts/firebase';
 import storage from '../../javascripts/firebase-storage';
 // import UserProfile from './UserProfile'; // New.
 
@@ -11,8 +11,6 @@ import SightingFormSelect from './SightingFormSelect';
 import IconPhoto from '../IconPhoto';
 
 import store from '../../store/configureStore';
-
-import './SightingForm.css';
 
 class SightingForm extends Component {
   constructor(props) {
@@ -53,7 +51,7 @@ class SightingForm extends Component {
   writeSpecies() {
     let sp = this.state.scientificName;
     let snap;
-    fb
+    firebase
       .database()
       .ref()
       .child('species/' + sp)
@@ -61,7 +59,7 @@ class SightingForm extends Component {
       .then(snap => {
         snap = snap.val();
         if (!snap) {
-          let newSpecies = fb
+          let newSpecies = firebase
             .database()
             .ref('species')
             .child(sp);
@@ -81,14 +79,14 @@ class SightingForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    let newSightingRef = fb
+    let newSightingRef = firebase
       .database()
       .ref('sightings')
-      .child(fb.auth().currentUser.uid);
-    let newSightingKey = fb
+      .child(auth.currentUser.uid);
+    let newSightingKey = firebase
       .database()
       .ref('sightings')
-      .child(fb.auth().currentUser.uid)
+      .child(auth.currentUser.uid)
       .push().key;
     let file = this.photoURL || null;
     if (file && !file.type.match('image.*')) {
@@ -168,7 +166,7 @@ class SightingForm extends Component {
 
   render() {
     return (
-      <form className="sighting-form__form" onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit}>
         <TextField
           hintText="Scientific Name"
           fullWidth={true}

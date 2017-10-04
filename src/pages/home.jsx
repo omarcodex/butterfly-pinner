@@ -1,10 +1,10 @@
 import React from 'react';
-import Navigation from '../components/Navigation';
+import Navbar from '../components/Navbar/Navbar';
 import PageWrapper from '../components/PageWrapper';
 
 const Home = () => (
   <div>
-    <Navigation />
+    <Navbar />
     <PageWrapper>
       <h1>Home</h1>
     </PageWrapper>

@@ -9,7 +9,7 @@ import Profile from './pages/profile';
 import Guide from './pages/guide';
 import Sighting from './pages/sighting';
 import Home from './pages/home';
-import { fb } from './javascripts/firebase';
+import firebase, { auth } from './javascripts/firebase';
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -21,7 +21,7 @@ const muiTheme = getMuiTheme({
 });
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const cU = fb.auth().currentUser;
+  const cU = auth.currentUser;
   return (
     <Route
       {...rest}

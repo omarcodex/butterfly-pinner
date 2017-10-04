@@ -1,11 +1,11 @@
 import React from 'react';
-import Navigation from '../components/Navigation';
+import Navbar from '../components/Navbar/Navbar';
 import PageWrapper from '../components/PageWrapper';
 import UserProfileContainer from '../components/UserProfile/UserProfileContainer';
 
 const Profile = () => (
   <div>
-    <Navigation />
+    <Navbar />
     <PageWrapper>
       <UserProfileContainer />
     </PageWrapper>

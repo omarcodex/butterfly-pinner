@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
-import firebase, { fb } from '../../javascripts/firebase';
+import firebase, { auth } from '../../javascripts/firebase';
 import { loginUser } from '../../actions/userActions';
 import store from '../../store/configureStore';
 
@@ -42,7 +42,7 @@ class LoginFormContainer extends Component {
   }
 
   handleLogin(e) {
-    const auth = fb.auth();
+    const auth = auth;
     const promise = auth.signInWithEmailAndPassword(
       this.state.email,
       this.state.password
@@ -55,7 +55,7 @@ class LoginFormContainer extends Component {
   }
 
   handleSignup(e) {
-    const auth = fb.auth();
+    const auth = auth;
     const promise = auth.createUserWithEmailAndPassword(
       this.state.email,
       this.state.password
@@ -64,7 +64,7 @@ class LoginFormContainer extends Component {
   }
 
   handleSignout(e) {
-    const promise = fb.auth().signOut();
+    const promise = auth.signOut();
     promise.then(e => this.handleNotification('Succesfully logged out!'));
   }
 
@@ -83,17 +83,13 @@ class LoginFormContainer extends Component {
 
   handleGoogleLogin(e) {
     const provider = new firebase.auth.GoogleAuthProvider();
-    let redirect = this.props.triggerRedirect;
-    fb
+    const r = this.props.triggerRedirect;
+    firebase
       .auth()
       .signInWithPopup(provider)
       .then(function(result) {
-        let args = {
-          user: result.user,
-          token: result.credential.accessToken
-        };
-        store.dispatch(loginUser(args));
-        redirect();
+        console.log(result);
+        r();
       })
       .catch(function(error) {
         console.log(error);
@@ -102,15 +98,13 @@ class LoginFormContainer extends Component {
 
   handleTwitterLogin(e) {
     const provider = new firebase.auth.TwitterAuthProvider();
-    fb
+    const r = this.props.triggerRedirect;
+    firebase
       .auth()
       .signInWithPopup(provider)
       .then(function(result) {
-        let args = {
-          user: result.user,
-          token: result.credential.accessToken
-        };
-        store.dispatch(loginUser(args));
+        console.log(result);
+        r();
       })
       .catch(function(error) {
         console.log(error);

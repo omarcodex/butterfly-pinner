@@ -1,18 +1,16 @@
-import React, { Component } from "react";
-import { Card, CardText, CardTitle } from "material-ui/Card";
-import SightingForm from "./SightingForm"
-import Snackbar from "material-ui/Snackbar";
-
-import './SightingForm.css';
+import React, { Component } from 'react';
+import { Card, CardText, CardTitle } from 'material-ui/Card';
+import SightingForm from './SightingForm';
+import Snackbar from 'material-ui/Snackbar';
 
 class SightingFormContainer extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.handleNotification = this.handleNotification.bind(this);
     this.handleNotificationClose = this.handleNotificationClose.bind(this);
     this.state = {
       notificationOpen: false,
-      notificationMessage: ""
+      notificationMessage: ''
     };
   }
 
@@ -25,19 +23,17 @@ class SightingFormContainer extends Component {
 
   handleNotificationClose() {
     this.setState({
-      notificationOpen: false,
+      notificationOpen: false
     });
-  };
+  }
 
-  render(){
-    return(
+  render() {
+    return (
       <div className="page">
-        <Card className="sighting-form__container">
-          <CardTitle
-            title="Log a New Sighting"
-          />
+        <Card>
+          <CardTitle title="Log a New Sighting" />
           <CardText>
-            <SightingForm handleNotification={this.handleNotification}/>
+            <SightingForm handleNotification={this.handleNotification} />
           </CardText>
           <Snackbar
             open={this.state.notificationOpen}
@@ -47,7 +43,7 @@ class SightingFormContainer extends Component {
           />
         </Card>
       </div>
-    )
+    );
   }
 }
 
