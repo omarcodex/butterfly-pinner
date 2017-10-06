@@ -36,6 +36,16 @@ const SlideOutMenu = props => {
           Sighting
         </MenuItem>
       </Link>
+      <Link to="/profile">
+        <MenuItem
+          onClick={props.handleClose}
+          leftIcon={
+            <FontIcon className="material-icons">perm_identity</FontIcon>
+          }
+        >
+          Profile
+        </MenuItem>
+      </Link>
     </Drawer>
   );
 };

@@ -9,7 +9,7 @@ import Profile from './pages/profile';
 import Guide from './pages/guide';
 import Sighting from './pages/sighting';
 import Home from './pages/home';
-import firebase, { auth } from './javascripts/firebase';
+import { auth } from './javascripts/firebase';
 
 const muiTheme = getMuiTheme({
   palette: {

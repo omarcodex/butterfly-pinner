@@ -10,6 +10,8 @@ import ActionAndroid from 'material-ui/svg-icons/navigation/expand-more';
 const UserMenu = props => {
   return (
     <IconMenu
+      anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+      targetOrigin={{ horizontal: 'right', vertical: 'top' }}
       iconButtonElement={
         <RaisedButton
           label={`Logged in as ${props.user.displayName}`}
@@ -19,9 +21,6 @@ const UserMenu = props => {
         />
       }
     >
-      <Link to="/profile">
-        <MenuItem primaryText="Profile" />
-      </Link>
       <MenuItem primaryText="Log Out" onClick={props.handleSignout} />
     </IconMenu>
   );
