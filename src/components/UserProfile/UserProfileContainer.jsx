@@ -25,7 +25,7 @@ class UserProfileContainer extends Component {
 
   render() {
     return (
-      <div className="page">
+      <div>
         <UserProfile
           user={store.getState().user}
           sightings={this.state.sightings}
