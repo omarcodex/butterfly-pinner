@@ -1,4 +1,9 @@
 import React from 'react';
+// import { Card, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+// import styled from 'styled-components';
+// const Img = styled.img`
+//   margin:
+// `
 
 const SightingList = props => {
   console.log(props);
@@ -23,6 +28,9 @@ const SightingList = props => {
           <li>
             Long:
             {s.lon}
+          </li>
+          <li>
+            <img src={s.photoURL} alt={s.scientificName} width="300px" />
           </li>
         </ul>
       ))}
