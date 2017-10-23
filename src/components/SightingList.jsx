@@ -16,7 +16,7 @@ const SightingList = props => {
           <CardMedia>
             <img
               src={s.photoURL || 'https://evolution.berkeley.edu/evolibrary/images/evo/ontogenew.gif'}
-              alt={s.scientificName}
+              alt={s.scientificName || 'Sighting image here.'}
             />
           </CardMedia>
           <CardText>
