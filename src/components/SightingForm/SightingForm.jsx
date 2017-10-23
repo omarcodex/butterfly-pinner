@@ -42,9 +42,7 @@ class SightingForm extends Component {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.showPosition);
     } else {
-      this.props.handleNotification(
-        'Geolocation is not supported by this browser.'
-      );
+      this.props.handleNotification('Geolocation is not supported by this browser.');
     }
   }
 
@@ -94,6 +92,7 @@ class SightingForm extends Component {
       return;
     }
     // To-do: save species to dictionary if it hasn't been logged already:
+    let currentTime = new Date();
     this.writeSpecies();
     newSightingRef
       .child(newSightingKey)
@@ -103,7 +102,8 @@ class SightingForm extends Component {
         sex: this.state.sex,
         lat: this.state.lat,
         lon: this.state.lon,
-        photoURL: this.photoURL || 'NA'
+        photoURL: this.photoURL || 'NA',
+        createdAt: currentTime
       })
       .then(
         function(data) {
@@ -122,19 +122,14 @@ class SightingForm extends Component {
                   .ref(fullPath)
                   .getDownloadURL()
                   .then(function(url) {
-                    newSightingRef
-                      .child(newSightingKey)
-                      .update({ photoURL: url });
+                    newSightingRef.child(newSightingKey).update({ photoURL: url });
                   });
               }.bind(this)
             );
         }.bind(this)
       )
       .catch(function(error) {
-        console.error(
-          'There was an error uploading a file to Cloud Storage:',
-          error
-        );
+        console.error('There was an error uploading a file to Cloud Storage:', error);
       });
     this.resetState();
     this.props.handleNotification('Record successfully added to the database.');
@@ -181,17 +176,10 @@ class SightingForm extends Component {
           onChange={this.handleChange}
           data-target-field="count"
         />
-        <SightingFormSelect
-          handleChange={this.handleChange}
-          value={this.state.sex}
-        />
+        <SightingFormSelect handleChange={this.handleChange} value={this.state.sex} />
         <TextField hintText="Latitude" value={this.state.lat} />
         <TextField hintText="Longitude" value={this.state.lon} />
-        <FlatButton
-          label="Get GPS Coordinates"
-          primary={true}
-          onClick={this.getPosition}
-        />
+        <FlatButton label="Get GPS Coordinates" primary={true} onClick={this.getPosition} />
         <br />
         <br />
         <div>
