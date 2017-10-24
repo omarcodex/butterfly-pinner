@@ -51,27 +51,73 @@ class SightingForm extends Component {
     let sp = this.state.scientificName;
 
     let genus = sp.split(/ |\./)[0];
-    let species = sp.split(/ |\./)[1] || 'NA';
+    let species = sp.split(/ |\./)[1];
     let snap;
-    firebase
-      .database()
-      .ref()
-      .child('species/' + genus)
-      .once('value')
-      .then(snap => {
-        snap = snap.val();
-        if (!snap) {
-          let newSpecies = firebase
-            .database()
-            .ref('species')
-            .child(genus);
-          newSpecies.set({
-            rawData: sp,
-            genus: genus,
-            species: species
-          });
-        }
-      });
+
+    if (species !== null) {
+      firebase
+        .database()
+        .ref()
+        .child('species/' + genus)
+        .child(species)
+        .once('value')
+        .then(snap => {
+          snap = snap.val();
+          if (!snap) {
+            let newSpecies = firebase
+              .database()
+              .ref('species')
+              .child(genus)
+              .child(species);
+            newSpecies.set({
+              rawData: sp,
+              genus: genus,
+              species: species
+            });
+          }
+        });
+    } else {
+      firebase
+        .database()
+        .ref()
+        .child('species/' + genus)
+        .once('value')
+        .then(snap => {
+          snap = snap.val();
+          if (!snap) {
+            let newSpecies = firebase
+              .database()
+              .ref('species')
+              .child(genus);
+            newSpecies.set({
+              rawData: sp,
+              genus: genus,
+              species: species || 'NA'
+            });
+          }
+        });
+    }
+
+    // SAVE original method: storing to single branch:
+    // firebase
+    //   .database()
+    //   .ref()
+    //   .child('species/' + genus)
+    //   .once('value')
+    //   .then(snap => {
+    //     snap = snap.val();
+    //     if (!snap) {
+    //       let newSpecies = firebase
+    //         .database()
+    //         .ref('species')
+    //         .child(genus);
+    //       newSpecies.set({
+    //         rawData: sp,
+    //         genus: genus,
+    //         species: species
+    //       });
+    //     }
+    //   });
   }
 
   uploadFile(e) {
