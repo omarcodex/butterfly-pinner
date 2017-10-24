@@ -27,7 +27,8 @@ class SightingForm extends Component {
       sex: '',
       lat: '',
       lon: '',
-      photoURL: null
+      photoURL: null,
+      currentTime: null
     };
   }
 
@@ -48,11 +49,14 @@ class SightingForm extends Component {
 
   writeSpecies() {
     let sp = this.state.scientificName;
+
+    let genus = sp.split(/ |\./)[0];
+    let species = sp.split(/ |\./)[1] || 'NA';
     let snap;
     firebase
       .database()
       .ref()
-      .child('species/' + sp)
+      .child('species/' + genus)
       .once('value')
       .then(snap => {
         snap = snap.val();
@@ -60,11 +64,11 @@ class SightingForm extends Component {
           let newSpecies = firebase
             .database()
             .ref('species')
-            .child(sp);
+            .child(genus);
           newSpecies.set({
             rawData: sp,
-            genus: sp.split(' ')[0],
-            species: sp.split(' ')[1] || 'NA' // In case of incorrect input.
+            genus: genus,
+            species: species
           });
         }
       });
@@ -93,6 +97,7 @@ class SightingForm extends Component {
     }
     // To-do: save species to dictionary if it hasn't been logged already:
     let currentTime = new Date();
+    this.state.currentTime = currentTime.toString();
     this.writeSpecies();
     newSightingRef
       .child(newSightingKey)
@@ -103,7 +108,7 @@ class SightingForm extends Component {
         lat: this.state.lat,
         lon: this.state.lon,
         photoURL: this.photoURL || 'NA',
-        createdAt: currentTime
+        createdAt: this.state.currentTime
       })
       .then(
         function(data) {
