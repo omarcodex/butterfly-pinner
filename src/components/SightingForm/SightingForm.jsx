@@ -80,8 +80,6 @@ class SightingForm extends Component {
             // DEV: Saving again for future guidebook...
             if (!snap) {
               let newSpeciesForGuidebook = firebase.database().ref('guidebook');
-              // .child(genus)
-              // .child(species);
               newSpeciesForGuidebook.push({
                 rawData: sp,
                 genus: genus,
