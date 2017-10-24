@@ -63,6 +63,8 @@ class SightingForm extends Component {
         .once('value')
         .then(snap => {
           snap = snap.val();
+
+          // Saving once for Species tree...
           if (!snap) {
             let newSpecies = firebase
               .database()
@@ -74,6 +76,20 @@ class SightingForm extends Component {
               genus: genus,
               species: species
             });
+
+            // DEV: Saving again for future guidebook...
+            if (!snap) {
+              let newSpeciesForGuidebook = firebase.database().ref('guidebook');
+              // .child(genus)
+              // .child(species);
+              newSpeciesForGuidebook.push({
+                rawData: sp,
+                genus: genus,
+                species: species,
+                // photoURL: this.photoURL || 'TBD',
+                createdAt: this.state.currentTime
+              });
+            }
           }
         });
     } else {
