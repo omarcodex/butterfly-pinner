@@ -181,8 +181,8 @@ class SightingForm extends Component {
               function(snapshot) {
                 // Get the file's Storage URI and update the reference:
                 var fullPath = snapshot.metadata.fullPath;
-                console.log('current data.', data);
-                console.log('current snapshot', snapshot);
+                // console.log('current data.', data);
+                // console.log('current snapshot', snapshot);
                 return storage
                   .ref(fullPath)
                   .getDownloadURL()
