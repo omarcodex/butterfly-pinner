@@ -27,7 +27,8 @@ class SightingForm extends Component {
       sex: '',
       lat: '',
       lon: '',
-      photoURL: null
+      photoURL: null,
+      currentTime: null
     };
   }
 
@@ -42,34 +43,95 @@ class SightingForm extends Component {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.showPosition);
     } else {
-      this.props.handleNotification(
-        'Geolocation is not supported by this browser.'
-      );
+      this.props.handleNotification('Geolocation is not supported by this browser.');
     }
   }
 
   writeSpecies() {
     let sp = this.state.scientificName;
+
+    let genus = sp.split(/ |\./)[0];
+    let species = sp.split(/ |\./)[1];
     let snap;
-    firebase
-      .database()
-      .ref()
-      .child('species/' + sp)
-      .once('value')
-      .then(snap => {
-        snap = snap.val();
-        if (!snap) {
-          let newSpecies = firebase
-            .database()
-            .ref('species')
-            .child(sp);
-          newSpecies.set({
-            rawData: sp,
-            genus: sp.split(' ')[0],
-            species: sp.split(' ')[1] || 'NA' // In case of incorrect input.
-          });
-        }
-      });
+
+    if (species !== null) {
+      firebase
+        .database()
+        .ref()
+        .child('species/' + genus)
+        .child(species)
+        .once('value')
+        .then(snap => {
+          snap = snap.val();
+
+          // Saving once for Species tree...
+          if (!snap) {
+            let newSpecies = firebase
+              .database()
+              .ref('species')
+              .child(genus)
+              .child(species);
+            newSpecies.set({
+              rawData: sp,
+              genus: genus,
+              species: species
+            });
+
+            // DEV: Saving again for future guidebook...
+            if (!snap) {
+              let newSpeciesForGuidebook = firebase.database().ref('guidebook');
+              newSpeciesForGuidebook.push({
+                rawData: sp,
+                genus: genus,
+                species: species,
+                // photoURL: this.photoURL || 'TBD',
+                createdAt: this.state.currentTime
+              });
+            }
+          }
+        });
+    } else {
+      firebase
+        .database()
+        .ref()
+        .child('species/' + genus)
+        .once('value')
+        .then(snap => {
+          snap = snap.val();
+          if (!snap) {
+            let newSpecies = firebase
+              .database()
+              .ref('species')
+              .child(genus);
+            newSpecies.set({
+              rawData: sp,
+              genus: genus,
+              species: species || 'NA'
+            });
+          }
+        });
+    }
+
+    // SAVE original method: storing to single branch:
+    // firebase
+    //   .database()
+    //   .ref()
+    //   .child('species/' + genus)
+    //   .once('value')
+    //   .then(snap => {
+    //     snap = snap.val();
+    //     if (!snap) {
+    //       let newSpecies = firebase
+    //         .database()
+    //         .ref('species')
+    //         .child(genus);
+    //       newSpecies.set({
+    //         rawData: sp,
+    //         genus: genus,
+    //         species: species
+    //       });
+    //     }
+    //   });
   }
 
   uploadFile(e) {
@@ -94,6 +156,8 @@ class SightingForm extends Component {
       return;
     }
     // To-do: save species to dictionary if it hasn't been logged already:
+    let currentTime = new Date();
+    this.state.currentTime = currentTime.toString();
     this.writeSpecies();
     newSightingRef
       .child(newSightingKey)
@@ -103,7 +167,8 @@ class SightingForm extends Component {
         sex: this.state.sex,
         lat: this.state.lat,
         lon: this.state.lon,
-        photoURL: this.photoURL || 'NA'
+        photoURL: this.photoURL || 'NA',
+        createdAt: this.state.currentTime
       })
       .then(
         function(data) {
@@ -116,25 +181,20 @@ class SightingForm extends Component {
               function(snapshot) {
                 // Get the file's Storage URI and update the reference:
                 var fullPath = snapshot.metadata.fullPath;
-                console.log('current data.', data);
-                console.log('current snapshot', snapshot);
+                // console.log('current data.', data);
+                // console.log('current snapshot', snapshot);
                 return storage
                   .ref(fullPath)
                   .getDownloadURL()
                   .then(function(url) {
-                    newSightingRef
-                      .child(newSightingKey)
-                      .update({ photoURL: url });
+                    newSightingRef.child(newSightingKey).update({ photoURL: url });
                   });
               }.bind(this)
             );
         }.bind(this)
       )
       .catch(function(error) {
-        console.error(
-          'There was an error uploading a file to Cloud Storage:',
-          error
-        );
+        console.error('There was an error uploading a file to Cloud Storage:', error);
       });
     this.resetState();
     this.props.handleNotification('Record successfully added to the database.');
@@ -181,17 +241,10 @@ class SightingForm extends Component {
           onChange={this.handleChange}
           data-target-field="count"
         />
-        <SightingFormSelect
-          handleChange={this.handleChange}
-          value={this.state.sex}
-        />
+        <SightingFormSelect handleChange={this.handleChange} value={this.state.sex} />
         <TextField hintText="Latitude" value={this.state.lat} />
         <TextField hintText="Longitude" value={this.state.lon} />
-        <FlatButton
-          label="Get GPS Coordinates"
-          primary={true}
-          onClick={this.getPosition}
-        />
+        <FlatButton label="Get GPS Coordinates" primary={true} onClick={this.getPosition} />
         <br />
         <br />
         <div>

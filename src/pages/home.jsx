@@ -14,15 +14,15 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    let sightings;
-    let ref = db.ref().child('sightings');
-    var that = this;
-    ref.once('value').then(function(snap) {
-      sightings = Object.values(snap.val());
-      that.setState({
-        sightings: sightings
-      });
-    });
+    // let sightings;
+    // let ref = db.ref().child('sightings');
+    // var that = this;
+    // ref.once('value').then(function(snap) {
+    //   sightings = Object.values(snap.val());
+    //   that.setState({
+    //     sightings: sightings
+    //   });
+    // });
   }
 
   render() {
@@ -32,9 +32,7 @@ class Home extends Component {
         <PageWrapper>
           <Card>
             <CardTitle title="Home" />
-            <CardText>
-              <SightingList sightings={this.state.sightings} />
-            </CardText>
+            <CardText>{/* <SightingList sightings={this.state.sightings} /> */}</CardText>
           </Card>
         </PageWrapper>
       </div>
